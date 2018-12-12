@@ -1,0 +1,16 @@
+<html>
+<body>
+    <input type="button" value="Start">
+    <script src="script.js" />
+    <script>
+        var button = document.querySelector('input[type="button"]');
+        button.addEventListener('click', function () {
+            var module = new module();
+            module.start({
+                inputUrl: 'input.txt',
+                outputSelector: 'input[type="text"]'
+            });
+        });
+    </script>
+</body>
+</html>
