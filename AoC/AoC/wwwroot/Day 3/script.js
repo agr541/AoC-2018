@@ -21,233 +21,173 @@ window.module = function () {
         var result = 0;
         var lineContents = line.trim();
         if (lineContents.length > 0) {
-           
+            result = parseRectangle(lineContents);
         }
         return result;
     };
 
-    var setXY = function (data, result) {
-        var arr = data.split(',');
-        result.x = parseInt(arr[0])+1;
-        result.y = parseInt(arr[1])+1;
+    var setPosition = function (data, result) {
+        var splitted = data.split(',');
+        result.left = parseInt(splitted[0]) + 1;
+        result.top = parseInt(splitted[1]) + 1;
         return result;
     };
 
-    var setWH = function (data, result) {
-        var arr = data.split('x');
-        result.w = parseInt(arr[0]);
-        result.h = parseInt(arr[1]);
+    var setSize = function (data, result) {
+        var splitted = data.split('x');
+        result.width = parseInt(splitted[0]);
+        result.height = parseInt(splitted[1]);
         return result;
-    }
+    };
 
-    var parseRect = function (line) {
+    var parseRectangle = function (line) {
+        var idDimensions = line.split(' @ ');
         var result = {
-            id: '',
-            x: 0,
-            y: 0,
-            w: 0,
-            h: 0
+            id: idDimensions[0],
+            left: 0,
+            top: 0,
+            width: 0,
+            height: 0
         };
-        var lineParts = line.split(' @ ');
-        var rectInfo = lineParts[1].trim();
-        var rectInfoParts = rectInfo.split(':');
-        var xyPart = rectInfoParts[0];
-        var whPart = rectInfoParts[1].trim();
-        result = setXY(xyPart, result);
-        result = setWH(whPart, result);
-        result.id = lineParts[0];
+        var dimensions = idDimensions[1].trim();
+        var positionSize = dimensions.split(':');
+        var position = positionSize[0];
+        var size = positionSize[1].trim();
+        setPosition(position, result);
+        setSize(size, result);
         return result;
     };
 
-    var createCanvas = function (w, h, v) {
-        if (typeof v === 'undefined') {
-            v = 0;
-        };
-
-        var result = [];
-        var rows = new Array();
-        rows.length = h;
-        for (var r = 0; r < h; r++) {
-            var cols = new Array();
-            cols.length = w;
-            rows[r] = cols;
-        }
-        result = rows;
-        var size = (w * h);
-        for (var i = 0; i < size; i++) {
-            var y = Math.floor(i / w);
-            var x = i - y * w;
-            var row = result[y];
-            row[x] = v;
-        }
+    var createCanvas = function (rectangles, defaultValue) {
+        var result = new Object();
+        var columnCount = Math.max(...rectangles.map(getRight));
+        var rowCount = Math.max(...rectangles.map(getBottom));
+        var rows = new Array(rowCount);
+        rows.fill(null);
+        rows.forEach(function (row, rowIndex, rowArray) {
+            rowArray[rowIndex] = new Array(columnCount).fill(defaultValue);
+        });
+        result.rows = rows;
+        result.defaultValue = defaultValue;
+        result.rowCount = rowCount;
+        result.columnCount = columnCount;
+        result.writes = 0;
+        writeRectangles(rectangles, result);
         return result;
     };
 
-    var drawRect = function (rect, canvas) {
-        var right = rect.x + rect.w;
-        var bottom = rect.y + rect.h;
-        for (var y = rect.y; y < bottom; y++) {
-            var row = canvas[y];
-            for (var x = rect.x; x < right; x++) {
-                row[x]++;
+    var writeRectangles = function (rectangles, canvas) {
+        rectangles.forEach(function (rectangle) {
+            writeRectangle(rectangle, canvas);
+        });
+    };
+
+    var writeRectangle = function (rectangle, canvas) {
+        var right = rectangle.left + rectangle.width;
+        var bottom = rectangle.top + rectangle.height;
+        for (var rowIndex = rectangle.top; rowIndex < bottom; rowIndex++) {
+            var row = canvas.rows[rowIndex];
+            for (var columnIndex = rectangle.left; columnIndex < right; columnIndex++) {
+                row[columnIndex]++;
+                canvas.writes++;
             }
         }
-        return canvas;
     };
 
-    var getOverlap = function (rect, otherRect) {
-        var result = {
-            x: 0,
-            y: 0,
-            w: 0,
-            h: 0
-        };
-        var cols = Math.max(rect.x + rect.w, otherRect.x+otherRect.w);
-        var rows = Math.max(rect.y + rect.h, otherRect.y + otherRect.h);
-        var canvas = createCanvas(cols, rows);
-        
+    var renderCanvas = function (canvas) {
+        var canvasElement = document.createElement('canvas');
+        canvasElement.width = canvas.columnCount;
+        canvasElement.height = canvas.rowCount;
+        document.body.appendChild(canvasElement);
+        var context = canvasElement.getContext("2d");
+        canvas.rows.forEach(function (row, rowIndex ) {
+            row.forEach(function (cell, columnIndex) {
+                var color = "#FFFFFF";
+                if (cell === 1) {
+                    color = "#000000";
+                } else if (cell > 1) {
+                    color = "#FF0000";
+                }
+                context.fillStyle = color;
+                context.fillRect(rowIndex + 1, columnIndex + 1, 1, 1);
+            });
+        });
+    };
 
-        drawRect(rect, canvas);
-        drawRect(otherRect, canvas);
-
-        for (var i = 0; i < (rows * cols); i++) {
-            var y = Math.floor(i / cols);
-            var x = i - y * cols;
-            if (canvas[y][x] > 1) {
-                if (result.x < x) result.x = x;
-                if (result.y < y) result.y = y;
-                var w = result.x - x;
-                var w = result.y - y;
-                if (result.w < w) result.w = w;
-                if (result.h < h) result.h = h;
-            }
-        }
+    var getValueCountHigherThan = function (canvas, higherThan) {
+        var result = 0;
+        canvas.rows.forEach(function (row) {
+            row.forEach(function (cell) {
+                if (cell > higherThan) {
+                    result++;
+                }
+            });
+        });
         return result;
+    };
+
+    var getRight = function (rectangle, index, rectangles) {
+        return rectangle.width + rectangle.left;
+    };
+
+    var getBottom = function (rectangle, index, rectangles) {
+        return rectangle.height + rectangle.top;
     };
 
     var processLinesA = function (lines) {
         var result = 0;
-        var rects = [];
-        var maxW = 0;
-        var maxH = 0;
+        var rectangles = [];
+        var rectangle;
         for (var i = 0; i < lines.length; i++) {
             var line = lines[i];
-            var rect = parseRect(line);
-            rects.push(rect);
-            var r = rect.x + rect.w;
-            if (r > maxW) {
-                maxW = r;
-            }
-            var b = rect.y + rect.h;
-            if (b > maxH) {
-                maxH = b;
-            }
+            rectangle = processLine(line);
+            rectangles.push(rectangle);
         }
-        var w = maxW;
-        var h = maxH;
-        var canvas = createCanvas(maxW, maxH);
-        
-        for (var j = 0; j < rects.length; j++) {
-            var rect = rects[j];
-            drawRect(rect, canvas);
-        }
-        var c = document.createElement('canvas');
-        c.width = maxW+1;
-        c.height = maxH+1;
-        document.body.appendChild(c);
-        var ctx = c.getContext("2d");
-        var canvasData = ctx.getImageData(0, 0, maxW, maxH);
-        
 
-        for (var i = 0; i < canvas.length; i++) {
-            
-            var row = canvas[i];
-            for (var j = 0; j < row.length; j++) {
-                if (row[j] == 0) {
-                    ctx.fillStyle = "#FFFFFF";
-                    ctx.fillRect(i + 1, j + 1, 1, 1);
-                }
-                if (row[j] > 0) {
-                    ctx.fillStyle = "#000000";
-                    ctx.fillRect(i+1, j+1, 1, 1);
-                }
-                if (row[j] > 1) {
-                    ctx.fillStyle = "#FF0000";
-                    ctx.fillRect(i + 1, j + 1, 1, 1);
-                    result++;
-                }
-            }
-        }
-       
-        console.info(canvas);
-        return result;
-    };
-    var getNotMatchingCharactersPositions = function (line, otherLine, max) {
-        var result = [];
-        for (var i = 0; i < line.length; i++) {
-            var lineCharCode = line.charCodeAt(i);
-            var otherlineCharCode = otherLine.charCodeAt(i);
-            if (lineCharCode !== otherlineCharCode) {
-                result.push(i);
-                if (result.length > max) {
-                    result = [];
-                    break;
-                }
-            }
-        }
+        var canvas = createCanvas(rectangles, 0);
+        result = getValueCountHigherThan(canvas,1);
+
+        renderCanvas(canvas);
         return result;
     };
 
-    var getRectSum = function (rect, canvas) {
-        var result = 0;
-        var right = rect.x + rect.w;
-        var bottom = rect.y + rect.h;
-        for (var y = rect.y; y < bottom; y++) {
-            var row = canvas[y];
-            for (var x = rect.x; x < right; x++) {
-                result+=row[x];
+    function findNonOverlappingRectangleId(rectangles, canvas) {
+        var result = '';
+        rectangles.forEach(function (rectangle) {
+            var writeCount = GetWriteCount(rectangle, canvas);
+            if (writeCount === 0) {
+                result = rectangle.id;
             }
-        }
+        });
         return result;
     }
-    var processLinesB = function (lines) {
-        var result = '';
-        var rects = [];
-        var maxW = 0;
-        var maxH = 0;
-        for (var i = 0; i < lines.length; i++) {
-            var line = lines[i];
-            var rect = parseRect(line);
-            rects.push(rect);
-            var r = rect.x + rect.w;
-            if (r > maxW) {
-                maxW = r;
-            }
-            var b = rect.y + rect.h;
-            if (b > maxH) {
-                maxH = b;
-            }
-        }
-        var w = maxW;
-        var h = maxH;
-        var canvas = createCanvas(maxW, maxH, -1);
-        for (var j = 0; j < rects.length; j++) {
-            var r = rects[j];
-            drawRect(r, canvas);
-        }
 
-        for (var j = 0; j < rects.length; j++) {
-            var r = rects[j];
-            var rs = getRectSum(r,canvas);
-            if (rs === 0) {
-                result = r.id;
-                //break;
+    var GetWriteCount = function (rectangle, canvas) {
+        var result = 0;
+        var right = rectangle.left + rectangle.width;
+        var bottom = rectangle.top + rectangle.height;
+        for (var rowIndex = rectangle.top; rowIndex < bottom; rowIndex++) {
+            var row = canvas.rows[rowIndex];
+            for (var columnIndex = rectangle.left; columnIndex < right; columnIndex++) {
+                result += row[columnIndex];
             }
         }
-
         return result;
     };
-    
+
+    var processLinesB = function (lines) {
+        var result = '';
+        var rectangles = [];
+        var rectangle;
+        lines.forEach(function (line) {
+            rectangle = processLine(line);
+            rectangles.push(rectangle);
+        });
+        var canvas = createCanvas(rectangles, -1);
+        result = findNonOverlappingRectangleId(rectangles, canvas);
+        return result;
+    };
+
     var pocessInputA = function (input) {
         var lines = input.split('\n');
         return processLinesA(lines);
