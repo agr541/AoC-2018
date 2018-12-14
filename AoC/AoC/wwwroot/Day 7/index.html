@@ -1,27 +1,39 @@
 <html>
 <body>
-    <input type="button" data-a="data-a" value="Start A"><br />
-    <input type="button" data-b="data-b" value="Start B"><br />
-    <label for="output">Output:</label><input type="text" id="output" />
-    <script src="script.js"></script>
-    <script>
-        var buttonA = document.querySelector('input[data-a]');
-        buttonA.addEventListener('click', function () {
-            var module = new window.module();
-            module.runA({
-                inputUrl: 'inputA.txt',
-                outputSelector: 'input[type="text"]'
-            });
-        });
+	<input type="button" data-a="data-a" value="Start A"><br />
+	<input type="button" data-b="data-b" value="Start B"><br />
 
-        var buttonB = document.querySelector('input[data-b]');
-        buttonB.addEventListener('click', function () {
-            var module = new window.module();
-            module.runB({
-                inputUrl: 'inputB.txt',
-                outputSelector: 'input[type="text"]'
-            });
-        });
-    </script>
+	<input type="button" data-v="data-v" value="Start V"><br />
+
+	<label for="output">Output:</label><input type="text" id="output" />
+	<script src="script.js"></script>
+	<script>
+		var buttonA = document.querySelector('input[data-a]');
+		buttonA.addEventListener('click', function () {
+			var module = new window.module();
+			module.runA({
+				inputUrl: 'inputA.txt',
+				outputSelector: 'input[type="text"]'
+			});
+		});
+
+		var buttonB = document.querySelector('input[data-b]');
+		buttonB.addEventListener('click', function () {
+			var module = new window.module();
+			module.runB({
+				inputUrl: 'inputB.txt',
+				outputSelector: 'input[type="text"]'
+			});
+		});
+		var buttonV = document.querySelector('input[data-v]');
+		buttonV.addEventListener('click', function () {
+			var module = new window.module();
+			module.runA({
+				inputUrl: 'inputV.txt',
+				outputSelector: 'input[type="text"]'
+			});
+		});
+
+	</script>
 </body>
 </html>
