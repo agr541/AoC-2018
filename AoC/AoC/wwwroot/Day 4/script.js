@@ -1,6 +1,4 @@
 window.module = function () {
-    
-
     var parseGuardStatus = function (guardStatusLine) {
         var parseDateTime = function (trimmedGuardStatusLine) {
             var year = parseInt(trimmedGuardStatusLine.substr(1, 4));
@@ -65,19 +63,19 @@ window.module = function () {
         });
     };
 
-    var findMostSleepingGuard = function(guardStatusArray) {
-        var findMostSleepingGuard = function (guards) {
-            var result = null;
-            function bySleepTimeDesc(guard, otherGuard) {
-                return otherGuard.sleepTime - guard.sleepTime;
-            };
+    var findMostSleepingGuard = function (guards) {
+        var result = null;
+        function bySleepTimeDesc(guard, otherGuard) {
+            return otherGuard.sleepTime - guard.sleepTime;
+        }
 
-            var tmpGuards = guards.copyWithin(0, 0);
-            tmpGuards = tmpGuards.sort(bySleepTimeDesc);
-            result = tmpGuards[0];
-            return result;
-        };
+        var tmpGuards = guards.copyWithin(0, 0);
+        tmpGuards = tmpGuards.sort(bySleepTimeDesc);
+        result = tmpGuards[0];
+        return result;
+    };
 
+    var setGuardsSleepDateTimes = function (guardStatusArray) {
         var result = 0;
         var guards = [];
         var currentGuard = null;
@@ -102,11 +100,10 @@ window.module = function () {
                 currentGuard.wakesUpDateTimes.push(guardStatus.dateTime);
             }
         });
-        result = findMostSleepingGuard(guards);
+        result = guards;
         return result;
     };
-    var minute = new Date(0, 0, 0, 0, 1).valueOf();
-    var findSleepsMostOnMinute = function (guard) {
+    var setGuardMostSleepingMinute = function (guard) {
         function createSleepingMinutes() {
             var result = [];
             for (var minute = 0; minute < 60; minute++) {
@@ -119,7 +116,7 @@ window.module = function () {
             var wakeUpTime = guard.wakesUpDateTimes.find(function (wakesUpDateTime) {
                 return wakesUpDateTime > fallsAsleepDateTime;
             });
-            
+
             var currentSleepingTime = fallsAsleepDateTime;
             while (currentSleepingTime < wakeUpTime) {
                 var minutes = currentSleepingTime.getMinutes();
@@ -127,24 +124,36 @@ window.module = function () {
                 currentSleepingTime.setMinutes(currentSleepingTime.getMinutes() + 1);
             }
         });
-        var result = 0;
+        var mostSleepingMinute = 0;
         var highestSleepingMinutesValue = Math.max(...sleepingMinutes.values());
-        var byValueEqualsHighestSleepingMinutes = function (key) {
-            return sleepingMinutes[key] === highestSleepingMinutesValue;
-        };
         var keys = new Array(...sleepingMinutes.keys());
         keys.some(function (key) {
             if (sleepingMinutes[key] === highestSleepingMinutesValue) {
-                result = key;
+                mostSleepingMinute = key;
                 return true;
             }
         });
+        guard.mostSleepingMinute = mostSleepingMinute;
+        guard.mostSleepingMinuteCount = sleepingMinutes[mostSleepingMinute];
+    };
+
+    var setGuardsMostSleepingMinute = function (guards) {
+        guards.forEach(setGuardMostSleepingMinute);
+        return guards;
+    };
+
+    var findMostSleepingMinuteGuard = function (guards) {
+        var result = null;
+        function byMostSleepingMinuteCountDesc(guard, otherGuard) {
+            return otherGuard.mostSleepingMinuteCount - guard.mostSleepingMinuteCount;
+        }
+
+        var tmpGuards = guards.copyWithin(0, 0);
+        tmpGuards = tmpGuards.sort(byMostSleepingMinuteCountDesc);
+        result = tmpGuards[0];
         return result;
     };
 
-    var findMostSleptMinuteGuard = function (guards) {
-       
-    };
     var processLinesA = function (lines) {
         var guardStatusArray = [];
         lines.forEach(function (line) {
@@ -152,12 +161,13 @@ window.module = function () {
             guardStatusArray.push(guardStatus);
         });
         setGuardIds(guardStatusArray);
-        mostSleepingGuard = findMostSleepingGuard(guardStatusArray);
-        sleepsMostOnMinute = findSleepsMostOnMinute(mostSleepingGuard);
-        result = mostSleepingGuard.guardId * sleepsMostOnMinute;
+        var guards = setGuardsSleepDateTimes(guardStatusArray);
+        guards = setGuardsMostSleepingMinute(guards);
+        var mostSleepingGuard = findMostSleepingGuard(guards);
+        var result = mostSleepingGuard.guardId * mostSleepingGuard.mostSleepingMinute;
         return result;
     };
-    
+
     var processLinesB = function (lines) {
         var guardStatusArray = [];
         lines.forEach(function (line) {
@@ -165,9 +175,10 @@ window.module = function () {
             guardStatusArray.push(guardStatus);
         });
         setGuardIds(guardStatusArray);
-        mostSleepingGuard = findMostSleepingGuard(guardStatusArray);
-        sleepsMostOnMinute = findSleepsMostOnMinute(mostSleepingGuard);
-        result = mostSleepingGuard.guardId * sleepsMostOnMinute;
+        var guards = setGuardsSleepDateTimes(guardStatusArray);
+        guards = setGuardsMostSleepingMinute(guards);
+        var mostSleepingMinuteGuard = findMostSleepingMinuteGuard(guards);
+        var result = mostSleepingMinuteGuard.guardId * mostSleepingMinuteGuard.mostSleepingMinute;
         return result;
     };
 
