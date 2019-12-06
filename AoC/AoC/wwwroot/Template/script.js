@@ -1,5 +1,7 @@
 // noprotect
 window.module = function () {
+    var answerA = 0;
+    var answerB = 0;
     var processLine = function (line) {
         var result = 0;
         var lineContents = line.trim();
@@ -55,14 +57,14 @@ window.module = function () {
     var initializeA = function (options) {
         var input = getInputFromUrl(options.inputUrl, function (input) {
             var output = pocessInputA(input);
-            setOutput(options.outputSelector, output);
+            setOutput(options.outputSelector, answerA);
         });
     };
 
     var initializeB = function (options) {
         var input = getInputFromUrl(options.inputUrl, function (input) {
             var output = pocessInputB(input);
-            setOutput(options.outputSelector, output);
+            setOutput(options.outputSelector, answerB);
         });
     };
 
