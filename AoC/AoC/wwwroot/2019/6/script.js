@@ -69,16 +69,25 @@ window.module = function () {
         var you = objects.find(o => o.name === 'YOU');
         var san = objects.find(o => o.name === 'SAN');
 
-        var youToStart = toStart(you.directOrbits);
-        var sanToStart = toStart(san.directOrbits);
+        var youToStart = toStart(you.directOrbits[0].directOrbits);
+        var sanToStart = toStart(san.directOrbits[0].directOrbits);
         var steps = 0;
+
+        console.info('you2start');
+        youToStart.forEach(o => console.info(o.name));
+
+        console.info('san2start');
+        sanToStart.forEach(o => console.info(o.name));
+
         youToStart.forEach(routePoint => {
             steps++;
-            var sanToStartPoint = sanToStart.indexOf(routePoint);
-            if (sanToStartPoint > -1) {
-                steps += sanToStart.length - sanToStartPoint - 1;
-                answerB = steps;
-                return;
+            var sanToStartPointIndex = sanToStart.indexOf(routePoint);
+            if (sanToStartPointIndex > -1) {
+                var youToSan = steps;
+                youToSan += sanToStartPointIndex + 1;
+                if (youToSan < answerB || answerB === 0) {
+                    answerB = youToSan;
+                }
             }
         });
         return result;
@@ -87,22 +96,16 @@ window.module = function () {
     var toStart = function (objects) {
         var result = [];
         objects.forEach(function (object) {
-            result = [ object ];
-            object.directOrbits.forEach(directOrbitObject => {
-                if (directOrbitObject.directOrbits.length > 0) {
-                    var inDirectOrbitObject = directOrbitObject.directOrbits[0];
-                    result = [ object, inDirectOrbitObject ];
-                    while (inDirectOrbitObject !== undefined && inDirectOrbitObject.directOrbits.length > 0) {
-                        inDirectOrbitObject = inDirectOrbitObject.directOrbits[0];
-                        if (inDirectOrbitObject !== undefined) {
-                            result.push(inDirectOrbitObject);
-                        } else {
-                            return result;
-                        }
-                    }
+            var inDirectOrbitObject = object.directOrbits[0];
+            result = [object, inDirectOrbitObject];
+            while (inDirectOrbitObject !== undefined && inDirectOrbitObject.directOrbits.length > 0) {
+                inDirectOrbitObject = inDirectOrbitObject.directOrbits[0];
+                if (inDirectOrbitObject !== undefined) {
+                    result.push(inDirectOrbitObject);
+                } else {
+                    return result;
                 }
-
-            });
+            }
         });
         return result;
     };
