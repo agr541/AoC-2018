@@ -1,0 +1,27 @@
+<html>
+<body>
+    <input type="button" data-a="data-a" value="Start A"><br />
+    <input type="button" data-b="data-b" value="Start B"><br />
+    <label for="output">Output:</label><textarea type="text" id="output" cols="25" rows="6" ></textarea>
+    <script src="script.js"></script>
+    <script>
+        var buttonA = document.querySelector('input[data-a]');
+        buttonA.addEventListener('click', function () {
+            var module = new window.module();
+            module.runA({
+                inputUrl: 'inputA.txt',
+                outputSelector: '#output'
+            });
+        });
+
+        var buttonB = document.querySelector('input[data-b]');
+        buttonB.addEventListener('click', function () {
+            var module = new window.module();
+            module.runB({
+                inputUrl: 'inputB.txt',
+                outputSelector: '#output'
+            });
+        });
+    </script>
+</body>
+</html>
