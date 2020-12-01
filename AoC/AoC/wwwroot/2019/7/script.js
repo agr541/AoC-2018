@@ -3,7 +3,7 @@ window.module = function () {
     var answerA;
     var answerB;
     var lastAmpHalted = false;
-    var processLine = function (line, input) {
+    var processLine = function (line, input, setOutput) {
         var result = 0;
         var output = 0;
 
@@ -80,6 +80,9 @@ window.module = function () {
                     case 4:
                         output = getParam(programData, programData[i + 1], paramModes[0]);
                         instructionPointer += 2;
+                        if (setOutput !== undefined) {
+                            setOutput(output);
+                        }
                         break;
                     case 5:
                         if (getParam(programData, programData[i + 1], paramModes[0]) !== 0) {
@@ -106,7 +109,7 @@ window.module = function () {
                         instructionPointer += 4;
                         break;
                     case 8:
-                        if (getParam(programData, programData[i + 1], paramModes[0]) == getParam(programData, programData[i + 2], paramModes[1])) {
+                        if (getParam(programData, programData[i + 1], paramModes[0]) === getParam(programData, programData[i + 2], paramModes[1])) {
                             programData[programData[i + 3]] = 1;
                         } else {
                             programData[programData[i + 3]] = 0;
@@ -183,6 +186,11 @@ window.module = function () {
         return result;
     };
 
+
+    var receiveOutput = function (outputValue) {
+
+    };
+
     var processLinesB = function (lines) {
         var program = lines[0];
         var maxOutput = 0;
@@ -193,10 +201,12 @@ window.module = function () {
         var input = 0;
         combination = [[9, 8, 7, 6, 5]];
         combinations.forEach(function (combination) {
+
+
             while (!lastAmpHalted) {
                 for (var i = 0; i < combination.length; i++) {
                     input = output;
-                    output = processLine(program, [combination[i], input].reverse());
+                    output = processLine(program, [combination[i], input].reverse(), receiveOutput);
                 }
                 input = output;
                 if (maxOutput < output) {
