@@ -15,13 +15,17 @@ window.module = function () {
 
         var password = parsePassword(passwordValue);
         var item = {};
-        item.minOccurs = parseInt(occurs[0]);
-        item.maxOccurs = parseInt(occurs[1]);
+        item.arg0 = parseInt(occurs[0]);
+        item.arg1 = parseInt(occurs[1]);
         item.character = character.charAt(0);
         item.password = password;
-        item.valid = isValid(item);
-        if (item.valid) {
+        item.validA = isValid(item);
+        item.validB = isValidB(item);
+        if (item.validA) {
             answerA++;
+        }
+        if (item.validB) {
+            answerB++;
         }
         items.push(item);
 
@@ -70,11 +74,22 @@ window.module = function () {
         return result;
     };
 
+    var isValidB = function (item) {
+        var result = true;
+        var password = item.password.value;
+        var arg0IsValid = password.charAt(item.arg0-1) === item.character;
+        var arg1IsValid = password.charAt(item.arg1-1) === item.character;
+
+        result = arg0IsValid ^ arg1IsValid;
+        return result === 1;
+    };
     var isValid = function (item) {
         var result = true;
         var password = item.password;
+
         var charCount = password.charCounts[item.character];
-        if (charCount < item.minOccurs || charCount > item.maxOccurs) {
+
+        if (typeof (charCount) === 'undefined' || charCount < item.arg0 || charCount > item.arg1) {
             result = false;
         }
         return result;
@@ -82,23 +97,20 @@ window.module = function () {
 
     var processLinesB = function (lines) {
         var result = 0;
+        answerB = 0;
+        items = [];
+        passwords = {};
+        var number;
         lines.forEach(function (line) {
-            number = parseInt(line);
-
-            items.forEach(function (item1, index1) {
-
-                items.forEach(function (item2, index2) {
-                    if (index1 !== index2) {
-                        if (item1 + item2 + number === 2020) {
-                            result = number * item1 * item2;
-                        }
-                    }
-                });
-            });
-            items.push(number);
-
             processLine(line);
         });
+
+        for (var item of items) {
+            if (!item.validB) {
+                result++;
+            }
+        }
+
         return result;
     };
 
@@ -139,7 +151,6 @@ window.module = function () {
     var initializeB = function (options) {
         var input = getInputFromUrl(options.inputUrl, function (input) {
             var output = pocessInputB(input);
-            answerB = output;
             setOutput(options.outputSelector, answerB);
         });
     };
