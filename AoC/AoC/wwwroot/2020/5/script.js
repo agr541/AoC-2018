@@ -2,10 +2,35 @@
 window.module = function () {
     var answerA = 0;
     var answerB = 0;
+    var rows = { min: 0.0, max: 127.0 };
+    var columns = { min: 0.0, max: 7.0 };
+    var seatIds = [];
     var processLine = function (line) {
         var result = 0;
         var lineContents = line.trim();
         if (lineContents.length > 0) {
+            var currentRows = Object.assign({}, rows);
+            var currentColumns = Object.assign({}, columns);
+            for (var char of lineContents) {
+                switch (char) {
+                    case 'F':
+                        currentRows.max -= Math.ceil((currentRows.max - currentRows.min) / 2);
+                        break;
+                    case 'B':
+                        currentRows.min += Math.ceil((currentRows.max - currentRows.min) / 2);
+                        break;
+                    case 'L':
+                        currentColumns.max -= Math.ceil((currentColumns.max - currentColumns.min) / 2);
+                        break;
+                    case 'R':
+                        currentColumns.min += Math.ceil((currentColumns.max - currentColumns.min) / 2);
+                        break;
+                }
+            }
+            result = currentRows.max * (columns.max + 1) + currentColumns.max;
+        }
+        if (answerA < result) {
+            answerA = result;
         }
         return result;
     };
@@ -18,9 +43,18 @@ window.module = function () {
     };
     var processLinesB = function (lines) {
         var result = 0;
+        seatIds = [];
         lines.forEach(function (line) {
-            processLine(line);
+            var seatId = processLine(line);
+            seatIds.push(seatId);
         });
+        seatIds.sort((a, b) => a - b);
+        for (var i = 0; i < seatIds.length; i++) {
+            if ((seatIds[i] - seatIds[i + 1]) !== -1) {
+                answerB = (seatIds[i] + 1);
+                break;
+            }
+        }
         return result;
     };
     var getInputFromUrl = function (url, fallbackUrl, callBack) {
@@ -54,6 +88,7 @@ window.module = function () {
         var input = getInputFromUrl(options.inputUrl, options.fallbacInputkUrl, function (input) {
             var output = pocessInputA(input);
             if (answerA !== 0) {
+                output = answerA;
             }
             setOutput(options.outputSelector, output);
         });
