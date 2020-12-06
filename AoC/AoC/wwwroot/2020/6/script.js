@@ -12,15 +12,55 @@ window.module = function () {
     };
     var processLinesA = function (lines) {
         var result = 0;
-        lines.forEach((line) => {
-            processLine(line);
-        });
+        var currentGroup = null;
+        for (var line of lines) {
+            if (currentGroup === null || line === '') {
+                if (currentGroup !== null) {
+                    var copy = JSON.parse(JSON.stringify(currentGroup));
+                    groupAnswers.push(copy);
+                }
+                currentGroup = {
+                    answers: [],
+                    uniqueAnswers: 0,
+                    answersPerPerson: []
+                };
+            }
+            if (line === '') {
+                continue;
+            }
+            var answersPerPerson = [];
+            for (var answer of line) {
+                if (!currentGroup.answers.includes(answer)) {
+                    currentGroup.uniqueAnswers++;
+                }
+                answersPerPerson.push(answer);
+                currentGroup.answers.push(answer);
+            }
+            currentGroup.answersPerPerson.push(Array.from(answersPerPerson));
+        }
+        if (currentGroup !== null) {
+            groupAnswers.push(currentGroup);
+        }
+        var uniqueAnswers = groupAnswers
+            .map((a) => a.uniqueAnswers);
+        var uniqueAnswersSum = uniqueAnswers
+            .reduce((a, b) => a + b);
+        answerA = uniqueAnswersSum;
+        answerB = 0;
+        for (var ga of groupAnswers) {
+            var distinctAnswers = Array.from(new Set(ga.answers));
+            for (var a of distinctAnswers) {
+                if (ga.answersPerPerson.every(app => app.includes(a))) {
+                    answerB++;
+                }
+            }
+        }
         return result;
     };
     var processLinesB = function (lines) {
-        var result = 0;
+        var result = processLinesA(lines);
         lines.forEach(function (line) {
-            processLine(line);
+            // processLine(line);
         });
         return result;
     };
@@ -30,7 +70,9 @@ window.module = function () {
         req.addEventListener('readystatechange', function () {
             var xhr = this;
             if (xhr.readyState === 4 && xhr.status === 200) {
-                callBack(req.responseText);
+                if (req.responseText.length !== 0 && fallbackUrl !== 'undefined') {
+                    callBack(req.responseText);
+                }
                 if (req.responseText.length === 0 && typeof fallbackUrl !== 'undefined' && fallBackRequested === false) {
                     fallBackRequested = true;
                     req.open('GET', fallbackUrl);
