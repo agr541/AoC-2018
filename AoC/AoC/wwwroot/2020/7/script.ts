@@ -2,13 +2,71 @@
 (window as any).module = function () {
     var answerA: number = 0;
     var answerB: number = 0;
+    var myBagName: string = 'shiny gold';
+    var bagRules: BagRule[] = [];
+
+    type BagAmount = {
+        bagName: string,
+        amount: number
+    };
+    type BagRule = {
+        bagName: string,
+        contains: BagAmount[]
+    };
+
     var processLine = function (line: string) {
         var result = 0;
-        var lineContents = line.trim();
+        var lineContents = line.trim().toLowerCase();
         if (lineContents.length > 0) {
+            var spaceSplitted = lineContents.split(' ');
+            //light red bags contain 1 bright white bag, 2 muted yellow bags.
+            var bagName: string = spaceSplitted[0] + ' ' + spaceSplitted[1];
 
+            var bagRule = {
+                bagName: bagName,
+                contains: []
+            }
+
+            for (var i: number = 4; i < spaceSplitted.length; i += 4) {
+                var amount = parseInt(spaceSplitted[i]);
+                if (amount > 0) {
+                    var amountBagName = spaceSplitted[i + 1] + ' ' + spaceSplitted[i + 2];
+
+                    var bagAmount: BagAmount = {
+                        amount: amount,
+                        bagName: amountBagName,
+                    };
+                    bagRule.contains.push(bagAmount);
+                }
+            }
+
+            bagRules.push(bagRule);
         }
+       
         return result;
+    };
+
+    var countBagColorsFor = function (bagName: string) {
+        var containingBags: string[] = [];
+        var currentBagNames: string[] = [bagName];
+        while (currentBagNames.length > 0) {
+            var copy = Array.from(currentBagNames);
+            currentBagNames = [];
+            for (var currentBagName of copy) {
+                var currentBagRules = bagRules.filter(bagRule => bagRule.contains.some(c => c.bagName === currentBagName));
+                currentBagNames.push(...Array
+                    .from(currentBagRules
+                        .map(cbr => cbr.bagName)
+                        .filter(cbn => !copy.includes(cbn))));
+
+                for (var foundBagRule of currentBagNames) {
+                    containingBags.push(foundBagRule);
+                }
+            }
+        }
+
+        var uniqueContainingBags = Array.from(new Set(containingBags));
+        return uniqueContainingBags.length;
     };
 
     var processLinesA = function (lines: string[]) {
@@ -16,6 +74,8 @@
         lines.forEach((line: string) => {
             processLine(line);
         });
+        answerA = countBagColorsFor(myBagName);
+
         return result;
     };
 
