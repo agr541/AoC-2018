@@ -2,7 +2,7 @@
 (window as any).module = function () {
     var answerA: number = 0;
     var answerB: number = 0;
-    var processLine = function (line: string) {
+    var processLineA = function (line: string) {
         var result = 0;
         var lineContents = line.trim();
         if (lineContents.length > 0) {
@@ -15,7 +15,7 @@
         var result = 0;
         var lastDepth = null;
         lines.forEach((line: string) => {
-            var depth = processLine(line);
+            var depth = processLineA(line);
             if (lastDepth != null && lastDepth < depth) {
                 result++;
             }
@@ -25,10 +25,36 @@
         return result;
     };
 
+    var windowedDepths = [];
+    var firstWindowIndex = 0;
+    var windowLength = 3;
+    
+    var processLineB = function (line: string) {
+        var result = 0;
+        var lineContents = line.trim();
+        if (lineContents.length > 0) {
+
+            result = parseInt(lineContents);
+            if (typeof(windowedDepths[firstWindowIndex])==='undefined') {
+                windowedDepths.push([]);
+            }
+            for (var i = 0; i < (windowLength-1); i++) {
+                if (typeof (windowedDepths[firstWindowIndex + i]) !== 'undefined') {
+                    var windowDepth = windowedDepths[firstWindowIndex];
+                    windowDepth.push(result);
+                    if (windowDepth.length === 3) {
+                        firstWindowIndex++;
+                    }
+                }
+            }
+        }
+        return result;
+    };
+
     var processLinesB = function (lines: string[]) {
         var result = 0;
         lines.forEach(function (line) {
-            processLine(line);
+            processLineB(line);
         });
         return result;
     };

@@ -1,25 +1,22 @@
 // noprotect
-(window as any).module = function () {
-    var answerA: number = 0;
-    var answerB: number = 0;
-    var processLineA = function (line: string) {
+window.module = function () {
+    var answerA = 0;
+    var answerB = 0;
+    var processLineA = function (line) {
         var result = 0;
         var lineContents = line.trim();
         if (lineContents.length > 0) {
-
         }
         return result;
     };
-
-    var processLinesA = function (lines: string[]) {
+    var processLinesA = function (lines) {
         var result = 0;
-        lines.forEach((line: string) => {
+        lines.forEach((line) => {
             processLineA(line);
         });
         return result;
     };
-
-    var processLineB = function (line: string) {
+    var processLineB = function (line) {
         var result = 0;
         var lineContents = line.trim();
         if (lineContents.length > 0) {
@@ -27,18 +24,15 @@
         }
         return result;
     };
-
-
-    var processLinesB = function (lines: string[]) {
+    var processLinesB = function (lines) {
         var result = 0;
         lines.forEach(function (line) {
             processLineB(line);
         });
         return result;
     };
-
-    var fallBackRequested: boolean = false;
-    var getInputFromUrl = function (url: string, fallbackUrl: string, callBack: HandleInputCallback) {
+    var fallBackRequested = false;
+    var getInputFromUrl = function (url, fallbackUrl, callBack) {
         var req = new XMLHttpRequest();
         req.addEventListener('readystatechange', function () {
             var xhr = this;
@@ -52,28 +46,23 @@
                     req.send();
                 }
             }
-
         });
         req.open('GET', url);
         req.send();
     };
-
-    var setOutput = function (outputSelector: string, outputValue: any) {
-        var output: HTMLInputElement = document.querySelector(outputSelector);
+    var setOutput = function (outputSelector, outputValue) {
+        var output = document.querySelector(outputSelector);
         output.value = outputValue;
     };
-
-    var pocessInputA = function (input: string) {
+    var pocessInputA = function (input) {
         var lines = input.split('\r\n');
         return processLinesA(lines);
     };
-
-    var pocessInputB = function (input: string) {
+    var pocessInputB = function (input) {
         var lines = input.split('\r\n');
         return processLinesB(lines);
     };
-
-    var initializeA = function (options: Options) {
+    var initializeA = function (options) {
         var input = getInputFromUrl(options.inputUrl, options.inputUrlFallback, function (input) {
             var output = pocessInputA(input);
             if (answerA !== 0) {
@@ -82,7 +71,6 @@
             setOutput(options.outputSelector, output);
         });
     };
-
     var initializeB = function (options) {
         var input = getInputFromUrl(options.inputUrl, options.inputUrlFallback, function (input) {
             var output = pocessInputB(input);
@@ -92,24 +80,16 @@
             setOutput(options.outputSelector, output);
         });
     };
-
-    var initialize = (options: Options) => {
+    var initialize = (options) => {
         if (options.runPart === 1) {
             initializeA(options);
-        } else if (options.runPart === 2) {
+        }
+        else if (options.runPart === 2) {
             initializeB(options);
         }
     };
-
     return {
         run: initialize
     };
-
-    type HandleInputCallback = (n: string) => any;
-    type Options = {
-        runPart: number,
-        inputUrl: string,
-        inputUrlFallback: string,
-        outputSelector: string
-    };
 };
+//# sourceMappingURL=script.js.map

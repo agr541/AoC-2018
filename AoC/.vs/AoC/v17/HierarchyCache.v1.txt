@@ -1,0 +1,343 @@
+﻿++Solution 'AoC' ‎(2 of 2 projects)
+++Script Documents
+++VM5
+++AoC
+i:{00000000-0000-0000-0000-000000000000}:AoC
+++Connected Services 
+i:{9554c250-5867-4f2c-956a-624dda48bce7}:>391
+++Dependencies
+i:{9554c250-5867-4f2c-956a-624dda48bce7}:>390
+++Analyzers
+i:{9554c250-5867-4f2c-956a-624dda48bce7}:analyzers
+++Frameworks
+i:{9554c250-5867-4f2c-956a-624dda48bce7}:frameworks
+++Microsoft.AspNetCore.App
+i:{9554c250-5867-4f2c-956a-624dda48bce7}:c:\users\antoine\source\repos\aoc2018\aoc\aoc\microsoft.aspnetcore.app
+++Microsoft.NETCore.App
+i:{9554c250-5867-4f2c-956a-624dda48bce7}:c:\users\antoine\source\repos\aoc2018\aoc\aoc\microsoft.netcore.app
+++Packages
+++Properties
+i:{9554c250-5867-4f2c-956a-624dda48bce7}:c:\users\antoine\source\repos\aoc2018\aoc\aoc\properties\
+++wwwroot
+i:{9554c250-5867-4f2c-956a-624dda48bce7}:c:\users\antoine\source\repos\aoc2018\aoc\aoc\wwwroot\
+++2018
+i:{9554c250-5867-4f2c-956a-624dda48bce7}:c:\users\antoine\source\repos\aoc2018\aoc\aoc\wwwroot\2018\
+++2019
+i:{9554c250-5867-4f2c-956a-624dda48bce7}:c:\users\antoine\source\repos\aoc2018\aoc\aoc\wwwroot\2019\
+++2020
+i:{9554c250-5867-4f2c-956a-624dda48bce7}:c:\users\antoine\source\repos\aoc2018\aoc\aoc\wwwroot\2020\
+++1
+i:{9554c250-5867-4f2c-956a-624dda48bce7}:c:\users\antoine\source\repos\aoc2018\aoc\aoc\wwwroot\2020\1\
+i:{9554c250-5867-4f2c-956a-624dda48bce7}:c:\users\antoine\source\repos\aoc2018\aoc\aoc\wwwroot\2021\1\
+i:{9554c250-5867-4f2c-956a-624dda48bce7}:c:\users\antoine\source\repos\aoc2018\aoc\aoc\wwwroot\2019\1\
+++2
+i:{9554c250-5867-4f2c-956a-624dda48bce7}:c:\users\antoine\source\repos\aoc2018\aoc\aoc\wwwroot\2020\2\
+i:{9554c250-5867-4f2c-956a-624dda48bce7}:c:\users\antoine\source\repos\aoc2018\aoc\aoc\wwwroot\2019\2\
+++3
+i:{9554c250-5867-4f2c-956a-624dda48bce7}:c:\users\antoine\source\repos\aoc2018\aoc\aoc\wwwroot\2020\3\
+i:{9554c250-5867-4f2c-956a-624dda48bce7}:c:\users\antoine\source\repos\aoc2018\aoc\aoc\wwwroot\2019\3\
+++4
+i:{9554c250-5867-4f2c-956a-624dda48bce7}:c:\users\antoine\source\repos\aoc2018\aoc\aoc\wwwroot\2020\4\
+i:{9554c250-5867-4f2c-956a-624dda48bce7}:c:\users\antoine\source\repos\aoc2018\aoc\aoc\wwwroot\2019\4\
+++5
+i:{9554c250-5867-4f2c-956a-624dda48bce7}:c:\users\antoine\source\repos\aoc2018\aoc\aoc\wwwroot\2020\5\
+i:{9554c250-5867-4f2c-956a-624dda48bce7}:c:\users\antoine\source\repos\aoc2018\aoc\aoc\wwwroot\2019\5\
+++6
+i:{9554c250-5867-4f2c-956a-624dda48bce7}:c:\users\antoine\source\repos\aoc2018\aoc\aoc\wwwroot\2020\6\
+i:{9554c250-5867-4f2c-956a-624dda48bce7}:c:\users\antoine\source\repos\aoc2018\aoc\aoc\wwwroot\2019\6\
+++7
+i:{9554c250-5867-4f2c-956a-624dda48bce7}:c:\users\antoine\source\repos\aoc2018\aoc\aoc\wwwroot\2020\7\
+i:{9554c250-5867-4f2c-956a-624dda48bce7}:c:\users\antoine\source\repos\aoc2018\aoc\aoc\wwwroot\2019\7\
+++2021
+i:{9554c250-5867-4f2c-956a-624dda48bce7}:c:\users\antoine\source\repos\aoc2018\aoc\aoc\wwwroot\2021\
+++exampleA.txt
+i:{9554c250-5867-4f2c-956a-624dda48bce7}:c:\users\antoine\source\repos\aoc2018\aoc\aoc\wwwroot\2021\1\examplea.txt
+i:{9554c250-5867-4f2c-956a-624dda48bce7}:c:\users\antoine\source\repos\aoc2018\aoc\aoc\wwwroot\template\examplea.txt
+i:{9554c250-5867-4f2c-956a-624dda48bce7}:c:\users\antoine\source\repos\aoc2018\aoc\aoc\wwwroot\2020\5\examplea.txt
+i:{9554c250-5867-4f2c-956a-624dda48bce7}:c:\users\antoine\source\repos\aoc2018\aoc\aoc\wwwroot\2020\6\examplea.txt
+i:{9554c250-5867-4f2c-956a-624dda48bce7}:c:\users\antoine\source\repos\aoc2018\aoc\aoc\wwwroot\2020\7\examplea.txt
+++exampleB.txt
+i:{9554c250-5867-4f2c-956a-624dda48bce7}:c:\users\antoine\source\repos\aoc2018\aoc\aoc\wwwroot\2021\1\exampleb.txt
+i:{9554c250-5867-4f2c-956a-624dda48bce7}:c:\users\antoine\source\repos\aoc2018\aoc\aoc\wwwroot\template\exampleb.txt
+i:{9554c250-5867-4f2c-956a-624dda48bce7}:c:\users\antoine\source\repos\aoc2018\aoc\aoc\wwwroot\2020\5\exampleb.txt
+i:{9554c250-5867-4f2c-956a-624dda48bce7}:c:\users\antoine\source\repos\aoc2018\aoc\aoc\wwwroot\2020\6\exampleb.txt
+i:{9554c250-5867-4f2c-956a-624dda48bce7}:c:\users\antoine\source\repos\aoc2018\aoc\aoc\wwwroot\2020\7\exampleb.txt
+++index.html
+i:{9554c250-5867-4f2c-956a-624dda48bce7}:c:\users\antoine\source\repos\aoc2018\aoc\aoc\wwwroot\2021\1\index.html
+i:{9554c250-5867-4f2c-956a-624dda48bce7}:c:\users\antoine\source\repos\aoc2018\aoc\aoc\wwwroot\template\index.html
+i:{9554c250-5867-4f2c-956a-624dda48bce7}:c:\users\antoine\source\repos\aoc2018\aoc\aoc\wwwroot\index.html
+i:{9554c250-5867-4f2c-956a-624dda48bce7}:c:\users\antoine\source\repos\aoc2018\aoc\aoc\wwwroot\2020\1\index.html
+i:{9554c250-5867-4f2c-956a-624dda48bce7}:c:\users\antoine\source\repos\aoc2018\aoc\aoc\wwwroot\2020\2\index.html
+i:{9554c250-5867-4f2c-956a-624dda48bce7}:c:\users\antoine\source\repos\aoc2018\aoc\aoc\wwwroot\2020\3\index.html
+i:{9554c250-5867-4f2c-956a-624dda48bce7}:c:\users\antoine\source\repos\aoc2018\aoc\aoc\wwwroot\2020\4\index.html
+i:{9554c250-5867-4f2c-956a-624dda48bce7}:c:\users\antoine\source\repos\aoc2018\aoc\aoc\wwwroot\2020\5\index.html
+i:{9554c250-5867-4f2c-956a-624dda48bce7}:c:\users\antoine\source\repos\aoc2018\aoc\aoc\wwwroot\2020\6\index.html
+i:{9554c250-5867-4f2c-956a-624dda48bce7}:c:\users\antoine\source\repos\aoc2018\aoc\aoc\wwwroot\2020\7\index.html
+i:{9554c250-5867-4f2c-956a-624dda48bce7}:c:\users\antoine\source\repos\aoc2018\aoc\aoc\wwwroot\2018\day 1\index.html
+i:{9554c250-5867-4f2c-956a-624dda48bce7}:c:\users\antoine\source\repos\aoc2018\aoc\aoc\wwwroot\2018\day 2\index.html
+i:{9554c250-5867-4f2c-956a-624dda48bce7}:c:\users\antoine\source\repos\aoc2018\aoc\aoc\wwwroot\2018\day 3\index.html
+i:{9554c250-5867-4f2c-956a-624dda48bce7}:c:\users\antoine\source\repos\aoc2018\aoc\aoc\wwwroot\2018\day 4\index.html
+i:{9554c250-5867-4f2c-956a-624dda48bce7}:c:\users\antoine\source\repos\aoc2018\aoc\aoc\wwwroot\2018\day 5\index.html
+i:{9554c250-5867-4f2c-956a-624dda48bce7}:c:\users\antoine\source\repos\aoc2018\aoc\aoc\wwwroot\2018\day 6\index.html
+i:{9554c250-5867-4f2c-956a-624dda48bce7}:c:\users\antoine\source\repos\aoc2018\aoc\aoc\wwwroot\2018\day 7\index.html
+i:{9554c250-5867-4f2c-956a-624dda48bce7}:c:\users\antoine\source\repos\aoc2018\aoc\aoc\wwwroot\2018\day 8\index.html
+i:{9554c250-5867-4f2c-956a-624dda48bce7}:c:\users\antoine\source\repos\aoc2018\aoc\aoc\wwwroot\2019\1\index.html
+i:{9554c250-5867-4f2c-956a-624dda48bce7}:c:\users\antoine\source\repos\aoc2018\aoc\aoc\wwwroot\2019\2\index.html
+i:{9554c250-5867-4f2c-956a-624dda48bce7}:c:\users\antoine\source\repos\aoc2018\aoc\aoc\wwwroot\2019\3\index.html
+i:{9554c250-5867-4f2c-956a-624dda48bce7}:c:\users\antoine\source\repos\aoc2018\aoc\aoc\wwwroot\2019\4\index.html
+i:{9554c250-5867-4f2c-956a-624dda48bce7}:c:\users\antoine\source\repos\aoc2018\aoc\aoc\wwwroot\2019\5\index.html
+i:{9554c250-5867-4f2c-956a-624dda48bce7}:c:\users\antoine\source\repos\aoc2018\aoc\aoc\wwwroot\2019\6\index.html
+i:{9554c250-5867-4f2c-956a-624dda48bce7}:c:\users\antoine\source\repos\aoc2018\aoc\aoc\wwwroot\2019\7\index.html
+i:{9554c250-5867-4f2c-956a-624dda48bce7}:c:\users\antoine\source\repos\aoc2018\aoc\aoc\wwwroot\2019\8\index.html
+++inputA.txt
+i:{9554c250-5867-4f2c-956a-624dda48bce7}:c:\users\antoine\source\repos\aoc2018\aoc\aoc\wwwroot\2021\1\inputa.txt
+i:{9554c250-5867-4f2c-956a-624dda48bce7}:c:\users\antoine\source\repos\aoc2018\aoc\aoc\wwwroot\template\inputa.txt
+i:{9554c250-5867-4f2c-956a-624dda48bce7}:c:\users\antoine\source\repos\aoc2018\aoc\aoc\wwwroot\2020\1\inputa.txt
+i:{9554c250-5867-4f2c-956a-624dda48bce7}:c:\users\antoine\source\repos\aoc2018\aoc\aoc\wwwroot\2020\2\inputa.txt
+i:{9554c250-5867-4f2c-956a-624dda48bce7}:c:\users\antoine\source\repos\aoc2018\aoc\aoc\wwwroot\2020\3\inputa.txt
+i:{9554c250-5867-4f2c-956a-624dda48bce7}:c:\users\antoine\source\repos\aoc2018\aoc\aoc\wwwroot\2020\4\inputa.txt
+i:{9554c250-5867-4f2c-956a-624dda48bce7}:c:\users\antoine\source\repos\aoc2018\aoc\aoc\wwwroot\2020\5\inputa.txt
+i:{9554c250-5867-4f2c-956a-624dda48bce7}:c:\users\antoine\source\repos\aoc2018\aoc\aoc\wwwroot\2020\6\inputa.txt
+i:{9554c250-5867-4f2c-956a-624dda48bce7}:c:\users\antoine\source\repos\aoc2018\aoc\aoc\wwwroot\2020\7\inputa.txt
+i:{9554c250-5867-4f2c-956a-624dda48bce7}:c:\users\antoine\source\repos\aoc2018\aoc\aoc\wwwroot\2018\day 2\inputa.txt
+i:{9554c250-5867-4f2c-956a-624dda48bce7}:c:\users\antoine\source\repos\aoc2018\aoc\aoc\wwwroot\2018\day 3\inputa.txt
+i:{9554c250-5867-4f2c-956a-624dda48bce7}:c:\users\antoine\source\repos\aoc2018\aoc\aoc\wwwroot\2018\day 4\inputa.txt
+i:{9554c250-5867-4f2c-956a-624dda48bce7}:c:\users\antoine\source\repos\aoc2018\aoc\aoc\wwwroot\2018\day 5\inputa.txt
+i:{9554c250-5867-4f2c-956a-624dda48bce7}:c:\users\antoine\source\repos\aoc2018\aoc\aoc\wwwroot\2018\day 6\inputa.txt
+i:{9554c250-5867-4f2c-956a-624dda48bce7}:c:\users\antoine\source\repos\aoc2018\aoc\aoc\wwwroot\2018\day 7\inputa.txt
+i:{9554c250-5867-4f2c-956a-624dda48bce7}:c:\users\antoine\source\repos\aoc2018\aoc\aoc\wwwroot\2018\day 8\inputa.txt
+i:{9554c250-5867-4f2c-956a-624dda48bce7}:c:\users\antoine\source\repos\aoc2018\aoc\aoc\wwwroot\2019\1\inputa.txt
+i:{9554c250-5867-4f2c-956a-624dda48bce7}:c:\users\antoine\source\repos\aoc2018\aoc\aoc\wwwroot\2019\2\inputa.txt
+i:{9554c250-5867-4f2c-956a-624dda48bce7}:c:\users\antoine\source\repos\aoc2018\aoc\aoc\wwwroot\2019\3\inputa.txt
+i:{9554c250-5867-4f2c-956a-624dda48bce7}:c:\users\antoine\source\repos\aoc2018\aoc\aoc\wwwroot\2019\4\inputa.txt
+i:{9554c250-5867-4f2c-956a-624dda48bce7}:c:\users\antoine\source\repos\aoc2018\aoc\aoc\wwwroot\2019\5\inputa.txt
+i:{9554c250-5867-4f2c-956a-624dda48bce7}:c:\users\antoine\source\repos\aoc2018\aoc\aoc\wwwroot\2019\6\inputa.txt
+i:{9554c250-5867-4f2c-956a-624dda48bce7}:c:\users\antoine\source\repos\aoc2018\aoc\aoc\wwwroot\2019\7\inputa.txt
+i:{9554c250-5867-4f2c-956a-624dda48bce7}:c:\users\antoine\source\repos\aoc2018\aoc\aoc\wwwroot\2019\8\inputa.txt
+++inputB.txt
+i:{9554c250-5867-4f2c-956a-624dda48bce7}:c:\users\antoine\source\repos\aoc2018\aoc\aoc\wwwroot\2021\1\inputb.txt
+i:{9554c250-5867-4f2c-956a-624dda48bce7}:c:\users\antoine\source\repos\aoc2018\aoc\aoc\wwwroot\template\inputb.txt
+i:{9554c250-5867-4f2c-956a-624dda48bce7}:c:\users\antoine\source\repos\aoc2018\aoc\aoc\wwwroot\2020\1\inputb.txt
+i:{9554c250-5867-4f2c-956a-624dda48bce7}:c:\users\antoine\source\repos\aoc2018\aoc\aoc\wwwroot\2020\2\inputb.txt
+i:{9554c250-5867-4f2c-956a-624dda48bce7}:c:\users\antoine\source\repos\aoc2018\aoc\aoc\wwwroot\2020\3\inputb.txt
+i:{9554c250-5867-4f2c-956a-624dda48bce7}:c:\users\antoine\source\repos\aoc2018\aoc\aoc\wwwroot\2020\4\inputb.txt
+i:{9554c250-5867-4f2c-956a-624dda48bce7}:c:\users\antoine\source\repos\aoc2018\aoc\aoc\wwwroot\2020\5\inputb.txt
+i:{9554c250-5867-4f2c-956a-624dda48bce7}:c:\users\antoine\source\repos\aoc2018\aoc\aoc\wwwroot\2020\6\inputb.txt
+i:{9554c250-5867-4f2c-956a-624dda48bce7}:c:\users\antoine\source\repos\aoc2018\aoc\aoc\wwwroot\2020\7\inputb.txt
+i:{9554c250-5867-4f2c-956a-624dda48bce7}:c:\users\antoine\source\repos\aoc2018\aoc\aoc\wwwroot\2018\day 2\inputb.txt
+i:{9554c250-5867-4f2c-956a-624dda48bce7}:c:\users\antoine\source\repos\aoc2018\aoc\aoc\wwwroot\2018\day 3\inputb.txt
+i:{9554c250-5867-4f2c-956a-624dda48bce7}:c:\users\antoine\source\repos\aoc2018\aoc\aoc\wwwroot\2018\day 4\inputb.txt
+i:{9554c250-5867-4f2c-956a-624dda48bce7}:c:\users\antoine\source\repos\aoc2018\aoc\aoc\wwwroot\2018\day 5\inputb.txt
+i:{9554c250-5867-4f2c-956a-624dda48bce7}:c:\users\antoine\source\repos\aoc2018\aoc\aoc\wwwroot\2018\day 6\inputb.txt
+i:{9554c250-5867-4f2c-956a-624dda48bce7}:c:\users\antoine\source\repos\aoc2018\aoc\aoc\wwwroot\2018\day 7\inputb.txt
+i:{9554c250-5867-4f2c-956a-624dda48bce7}:c:\users\antoine\source\repos\aoc2018\aoc\aoc\wwwroot\2018\day 8\inputb.txt
+i:{9554c250-5867-4f2c-956a-624dda48bce7}:c:\users\antoine\source\repos\aoc2018\aoc\aoc\wwwroot\2019\1\inputb.txt
+i:{9554c250-5867-4f2c-956a-624dda48bce7}:c:\users\antoine\source\repos\aoc2018\aoc\aoc\wwwroot\2019\2\inputb.txt
+i:{9554c250-5867-4f2c-956a-624dda48bce7}:c:\users\antoine\source\repos\aoc2018\aoc\aoc\wwwroot\2019\3\inputb.txt
+i:{9554c250-5867-4f2c-956a-624dda48bce7}:c:\users\antoine\source\repos\aoc2018\aoc\aoc\wwwroot\2019\4\inputb.txt
+i:{9554c250-5867-4f2c-956a-624dda48bce7}:c:\users\antoine\source\repos\aoc2018\aoc\aoc\wwwroot\2019\5\inputb.txt
+i:{9554c250-5867-4f2c-956a-624dda48bce7}:c:\users\antoine\source\repos\aoc2018\aoc\aoc\wwwroot\2019\6\inputb.txt
+i:{9554c250-5867-4f2c-956a-624dda48bce7}:c:\users\antoine\source\repos\aoc2018\aoc\aoc\wwwroot\2019\7\inputb.txt
+i:{9554c250-5867-4f2c-956a-624dda48bce7}:c:\users\antoine\source\repos\aoc2018\aoc\aoc\wwwroot\2019\8\inputb.txt
+++script.ts
+i:{9554c250-5867-4f2c-956a-624dda48bce7}:c:\users\antoine\source\repos\aoc2018\aoc\aoc\wwwroot\2021\1\script.ts
+i:{9554c250-5867-4f2c-956a-624dda48bce7}:c:\users\antoine\source\repos\aoc2018\aoc\aoc\wwwroot\template\script.ts
+i:{9554c250-5867-4f2c-956a-624dda48bce7}:c:\users\antoine\source\repos\aoc2018\aoc\aoc\wwwroot\2020\4\script.ts
+i:{9554c250-5867-4f2c-956a-624dda48bce7}:c:\users\antoine\source\repos\aoc2018\aoc\aoc\wwwroot\2020\5\script.ts
+i:{9554c250-5867-4f2c-956a-624dda48bce7}:c:\users\antoine\source\repos\aoc2018\aoc\aoc\wwwroot\2020\6\script.ts
+i:{9554c250-5867-4f2c-956a-624dda48bce7}:c:\users\antoine\source\repos\aoc2018\aoc\aoc\wwwroot\2020\7\script.ts
+++Template
+i:{9554c250-5867-4f2c-956a-624dda48bce7}:c:\users\antoine\source\repos\aoc2018\aoc\aoc\wwwroot\template\
+++redirectToLatest.ts
+i:{9554c250-5867-4f2c-956a-624dda48bce7}:c:\users\antoine\source\repos\aoc2018\aoc\aoc\wwwroot\redirecttolatest.ts
+++appsettings.json
+i:{9554c250-5867-4f2c-956a-624dda48bce7}:c:\users\antoine\source\repos\aoc2018\aoc\aoc\appsettings.json
+++Program.cs
+i:{9554c250-5867-4f2c-956a-624dda48bce7}:c:\users\antoine\source\repos\aoc2018\aoc\aoc\program.cs
+++No service dependencies discovered
+i:{9554c250-5867-4f2c-956a-624dda48bce7}:>392
+++Microsoft.AspNetCore.Analyzers
+i:{9554c250-5867-4f2c-956a-624dda48bce7}:c:\program files\dotnet\sdk\6.0.100\sdks\microsoft.net.sdk.web\analyzers\cs\microsoft.aspnetcore.analyzers.dll
+++Microsoft.AspNetCore.App.Analyzers
+i:{9554c250-5867-4f2c-956a-624dda48bce7}:c:\program files\dotnet\packs\microsoft.aspnetcore.app.ref\6.0.0\analyzers\dotnet\cs\microsoft.aspnetcore.app.analyzers.dll
+++Microsoft.AspNetCore.App.CodeFixes
+i:{9554c250-5867-4f2c-956a-624dda48bce7}:c:\program files\dotnet\packs\microsoft.aspnetcore.app.ref\6.0.0\analyzers\dotnet\cs\microsoft.aspnetcore.app.codefixes.dll
+++Microsoft.AspNetCore.Components.Analyzers
+i:{9554c250-5867-4f2c-956a-624dda48bce7}:c:\program files\dotnet\sdk\6.0.100\sdks\microsoft.net.sdk.web\analyzers\cs\microsoft.aspnetcore.components.analyzers.dll
+++Microsoft.AspNetCore.Mvc.Analyzers
+i:{9554c250-5867-4f2c-956a-624dda48bce7}:c:\program files\dotnet\sdk\nugetfallbackfolder\microsoft.aspnetcore.mvc.analyzers\2.1.1\analyzers\dotnet\cs\microsoft.aspnetcore.mvc.analyzers.dll
+++Microsoft.AspNetCore.Razor.Internal.SourceGenerator.Transport
+i:{9554c250-5867-4f2c-956a-624dda48bce7}:c:\program files\dotnet\sdk\6.0.100\sdks\microsoft.net.sdk.razor\source-generators\microsoft.aspnetcore.razor.internal.sourcegenerator.transport.dll
+++Microsoft.CodeAnalysis.CSharp.NetAnalyzers
+i:{9554c250-5867-4f2c-956a-624dda48bce7}:c:\program files\dotnet\sdk\6.0.100\sdks\microsoft.net.sdk\analyzers\microsoft.codeanalysis.csharp.netanalyzers.dll
+++Microsoft.CodeAnalysis.NetAnalyzers
+i:{9554c250-5867-4f2c-956a-624dda48bce7}:c:\program files\dotnet\sdk\6.0.100\sdks\microsoft.net.sdk\analyzers\microsoft.codeanalysis.netanalyzers.dll
+++Microsoft.Extensions.Logging.Generators
+i:{9554c250-5867-4f2c-956a-624dda48bce7}:c:\program files\dotnet\packs\microsoft.aspnetcore.app.ref\6.0.0\analyzers\dotnet\roslyn4.0\cs\microsoft.extensions.logging.generators.dll
+++Microsoft.NET.Sdk.Razor.SourceGenerators
+i:{9554c250-5867-4f2c-956a-624dda48bce7}:c:\program files\dotnet\sdk\6.0.100\sdks\microsoft.net.sdk.razor\source-generators\microsoft.net.sdk.razor.sourcegenerators.dll
+++System.Text.Json.SourceGeneration
+i:{9554c250-5867-4f2c-956a-624dda48bce7}:c:\program files\dotnet\packs\microsoft.netcore.app.ref\6.0.0\analyzers\dotnet\cs\system.text.json.sourcegeneration.dll
+++Microsoft.TypeScript.MSBuild (4.5.2)
+++launchSettings.json
+i:{9554c250-5867-4f2c-956a-624dda48bce7}:c:\users\antoine\source\repos\aoc2018\aoc\aoc\properties\launchsettings.json
+++Day 1
+i:{9554c250-5867-4f2c-956a-624dda48bce7}:c:\users\antoine\source\repos\aoc2018\aoc\aoc\wwwroot\2018\day 1\
+++Day 2
+i:{9554c250-5867-4f2c-956a-624dda48bce7}:c:\users\antoine\source\repos\aoc2018\aoc\aoc\wwwroot\2018\day 2\
+++Day 3
+i:{9554c250-5867-4f2c-956a-624dda48bce7}:c:\users\antoine\source\repos\aoc2018\aoc\aoc\wwwroot\2018\day 3\
+++Day 4
+i:{9554c250-5867-4f2c-956a-624dda48bce7}:c:\users\antoine\source\repos\aoc2018\aoc\aoc\wwwroot\2018\day 4\
+++Day 5
+i:{9554c250-5867-4f2c-956a-624dda48bce7}:c:\users\antoine\source\repos\aoc2018\aoc\aoc\wwwroot\2018\day 5\
+++Day 6
+i:{9554c250-5867-4f2c-956a-624dda48bce7}:c:\users\antoine\source\repos\aoc2018\aoc\aoc\wwwroot\2018\day 6\
+++Day 7
+i:{9554c250-5867-4f2c-956a-624dda48bce7}:c:\users\antoine\source\repos\aoc2018\aoc\aoc\wwwroot\2018\day 7\
+++Day 8
+i:{9554c250-5867-4f2c-956a-624dda48bce7}:c:\users\antoine\source\repos\aoc2018\aoc\aoc\wwwroot\2018\day 8\
+++8
+i:{9554c250-5867-4f2c-956a-624dda48bce7}:c:\users\antoine\source\repos\aoc2018\aoc\aoc\wwwroot\2019\8\
+++script.js
+i:{9554c250-5867-4f2c-956a-624dda48bce7}:c:\users\antoine\source\repos\aoc2018\aoc\aoc\wwwroot\2020\1\script.js
+i:{9554c250-5867-4f2c-956a-624dda48bce7}:c:\users\antoine\source\repos\aoc2018\aoc\aoc\wwwroot\2020\2\script.js
+i:{9554c250-5867-4f2c-956a-624dda48bce7}:c:\users\antoine\source\repos\aoc2018\aoc\aoc\wwwroot\2020\3\script.js
+i:{9554c250-5867-4f2c-956a-624dda48bce7}:c:\users\antoine\source\repos\aoc2018\aoc\aoc\wwwroot\2018\day 2\script.js
+i:{9554c250-5867-4f2c-956a-624dda48bce7}:c:\users\antoine\source\repos\aoc2018\aoc\aoc\wwwroot\2018\day 3\script.js
+i:{9554c250-5867-4f2c-956a-624dda48bce7}:c:\users\antoine\source\repos\aoc2018\aoc\aoc\wwwroot\2018\day 4\script.js
+i:{9554c250-5867-4f2c-956a-624dda48bce7}:c:\users\antoine\source\repos\aoc2018\aoc\aoc\wwwroot\2018\day 5\script.js
+i:{9554c250-5867-4f2c-956a-624dda48bce7}:c:\users\antoine\source\repos\aoc2018\aoc\aoc\wwwroot\2018\day 6\script.js
+i:{9554c250-5867-4f2c-956a-624dda48bce7}:c:\users\antoine\source\repos\aoc2018\aoc\aoc\wwwroot\2018\day 7\script.js
+i:{9554c250-5867-4f2c-956a-624dda48bce7}:c:\users\antoine\source\repos\aoc2018\aoc\aoc\wwwroot\2018\day 8\script.js
+i:{9554c250-5867-4f2c-956a-624dda48bce7}:c:\users\antoine\source\repos\aoc2018\aoc\aoc\wwwroot\2019\1\script.js
+i:{9554c250-5867-4f2c-956a-624dda48bce7}:c:\users\antoine\source\repos\aoc2018\aoc\aoc\wwwroot\2019\2\script.js
+i:{9554c250-5867-4f2c-956a-624dda48bce7}:c:\users\antoine\source\repos\aoc2018\aoc\aoc\wwwroot\2019\3\script.js
+i:{9554c250-5867-4f2c-956a-624dda48bce7}:c:\users\antoine\source\repos\aoc2018\aoc\aoc\wwwroot\2019\4\script.js
+i:{9554c250-5867-4f2c-956a-624dda48bce7}:c:\users\antoine\source\repos\aoc2018\aoc\aoc\wwwroot\2019\5\script.js
+i:{9554c250-5867-4f2c-956a-624dda48bce7}:c:\users\antoine\source\repos\aoc2018\aoc\aoc\wwwroot\2019\6\script.js
+i:{9554c250-5867-4f2c-956a-624dda48bce7}:c:\users\antoine\source\repos\aoc2018\aoc\aoc\wwwroot\2019\7\script.js
+i:{9554c250-5867-4f2c-956a-624dda48bce7}:c:\users\antoine\source\repos\aoc2018\aoc\aoc\wwwroot\2019\8\script.js
+i:{9554c250-5867-4f2c-956a-624dda48bce7}:c:\users\antoine\source\repos\aoc2018\aoc\aoc\wwwroot\2020\4\script.js
+++appsettings.Development.json
+i:{9554c250-5867-4f2c-956a-624dda48bce7}:c:\users\antoine\source\repos\aoc2018\aoc\aoc\appsettings.development.json
+++jsbin.wusirug.js
+i:{9554c250-5867-4f2c-956a-624dda48bce7}:c:\users\antoine\source\repos\aoc2018\aoc\aoc\wwwroot\2018\day 1\jsbin.wusirug.js
+++inputV.txt
+i:{9554c250-5867-4f2c-956a-624dda48bce7}:c:\users\antoine\source\repos\aoc2018\aoc\aoc\wwwroot\2018\day 7\inputv.txt
+++script.js.map
+i:{9554c250-5867-4f2c-956a-624dda48bce7}:c:\users\antoine\source\repos\aoc2018\aoc\aoc\wwwroot\2020\4\script.js.map
+++aoc-2021
+++css
+++js
+++lib
+++favicon.ico
+++Pages
+++Shared
+++_Layout.cshtml
+++_ValidationScriptsPartial.cshtml
+++_ViewImports.cshtml
+++_ViewStart.cshtml
+++Error.cshtml
+++Index.cshtml
+++Privacy.cshtml
+++site.css
+++site.js
+++bootstrap
+++jquery
+++jquery-validation
+++jquery-validation-unobtrusive
+++_Layout.cshtml.css
+++Error.cshtml.cs
+++Index.cshtml.cs
+++Privacy.cshtml.cs
+++dist
+++LICENSE
+++LICENSE.txt
+++LICENSE.md
+++jquery.validate.unobtrusive.js
+++jquery.js
+++additional-methods.js
+++jquery.validate.js
+++jquery.validate.unobtrusive.min.js
+++bootstrap.css
+++bootstrap-grid.css
+++bootstrap-reboot.css
+++bootstrap-utilities.css
+++bootstrap.js
+++jquery.min.js
+++additional-methods.min.js
+++jquery.validate.min.js
+++bootstrap.css.map
+++bootstrap.min.css
+++bootstrap.rtl.css
+++bootstrap-grid.css.map
+++bootstrap-grid.min.css
+++bootstrap-grid.rtl.css
+++bootstrap-reboot.css.map
+++bootstrap-reboot.min.css
+++bootstrap-reboot.rtl.css
+++bootstrap-utilities.css.map
+++bootstrap-utilities.min.css
+++bootstrap-utilities.rtl.css
+++bootstrap.bundle.js
+++bootstrap.esm.js
+++bootstrap.js.map
+++bootstrap.min.js
+++jquery.min.map
+++bootstrap.min.css.map
+++bootstrap.rtl.css.map
+++bootstrap.rtl.min.css
+++bootstrap-grid.min.css.map
+++bootstrap-grid.rtl.css.map
+++bootstrap-grid.rtl.min.css
+++bootstrap-reboot.min.css.map
+++bootstrap-reboot.rtl.css.map
+++bootstrap-reboot.rtl.min.css
+++bootstrap-utilities.min.css.map
+++bootstrap-utilities.rtl.css.map
+++bootstrap-utilities.rtl.min.css
+++bootstrap.bundle.js.map
+++bootstrap.bundle.min.js
+++bootstrap.esm.js.map
+++bootstrap.esm.min.js
+++bootstrap.min.js.map
+++bootstrap.rtl.min.css.map
+++bootstrap-grid.rtl.min.css.map
+++bootstrap-reboot.rtl.min.css.map
+++bootstrap-utilities.rtl.min.css.map
+++bootstrap.bundle.min.js.map
+++bootstrap.esm.min.js.map
+++chromewebdata
+++VM12
+++VM13
+++VM14
+++VM15
+++VM16
+++VM17
+++VM18
+++VM19
+++VM20
+++VM21
+++VM22
+++VM23
+++VM24
+++VM25
+++VM26
+++VM27
+++VM28
+++VM29
+++VM30
+++VM31
+++VM32
+++VM33
+++VM34
+++VM35
+++VM36
+++VM37
+++VM38
+++VM39
+++VM40
+++Solution 'AoC' ‎(1 of 1 project)
+i:{00000000-0000-0000-0000-000000000000}:AoC.sln
+++browserLink
