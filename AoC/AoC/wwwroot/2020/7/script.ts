@@ -7,7 +7,8 @@
 
     type BagAmount = {
         bagName: string,
-        amount: number
+        amount: number,
+        in: string,
     };
     type BagRule = {
         bagName: string,
@@ -35,6 +36,7 @@
                     var bagAmount: BagAmount = {
                         amount: amount,
                         bagName: amountBagName,
+                        in: ''
                     };
                     bagRule.contains.push(bagAmount);
                 }
@@ -42,7 +44,7 @@
 
             bagRules.push(bagRule);
         }
-       
+
         return result;
     };
 
@@ -79,11 +81,56 @@
         return result;
     };
 
+    var countBagsIn = function (bagName: string) {
+        var bagAmounts: BagAmount[] = [];
+        var currentBagAmounts: BagAmount[] = [{ bagName: bagName, amount: 1, in: '' }];
+        while (currentBagAmounts.length > 0) {
+            var copy = Array.from(currentBagAmounts);
+            currentBagAmounts = [];
+            for (var currentBagAmount of copy) {
+                var currentBagRules = bagRules.filter(bagRule => bagRule.bagName == currentBagAmount.bagName);
+
+                var mulpliedContains = currentBagRules
+                    .map(cbr => cbr
+                        .contains
+                        .map(cbrc => {
+                            return {
+                                bagName: cbrc.bagName,
+                                amount: (cbrc.amount * currentBagAmount.amount),
+                                in: currentBagAmount.in + ' - ' + currentBagAmount.amount + ' ' + currentBagAmount.bagName
+                            }
+                        }))
+                    .flat();
+
+                currentBagAmounts.push(...Array
+                    .from(mulpliedContains));
+
+                for (var bagAmount of currentBagAmounts) {
+                    bagAmounts.push(bagAmount);
+                }
+            }
+        }
+        /*
+         * 2 pale maroon bags, 5 pale purple bags, 4 posh brown bags, 1 dotted turquoise bag.
+         * pp 
+         * pale purple bags contain 5 wavy cyan bags, 5 dark salmon bags, 2 dark indigo bags, 1 plaid black bag.
+         * wavy cyan bags contain 4 light maroon bags.
+         */
+
+        var numberOfBags: number = 0;
+        for (var bagAmount of bagAmounts) {
+            numberOfBags += bagAmount.amount;
+        }
+        return numberOfBags;
+    };
+
     var processLinesB = function (lines: string[]) {
         var result = 0;
         lines.forEach(function (line) {
             processLine(line);
         });
+
+        answerB = countBagsIn(myBagName);
         return result;
     };
 
