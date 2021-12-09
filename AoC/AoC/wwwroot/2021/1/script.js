@@ -23,18 +23,25 @@ window.module = function () {
         return result;
     };
     var windowedDepths = [];
-    var firstWindowIndex = 0;
-    var windowLength = 0;
+    var windowIndex = 0;
+    var windowLength = 3;
     var processLineB = function (line) {
         var result = 0;
         var lineContents = line.trim();
         if (lineContents.length > 0) {
-            result = parseInt(lineContents);
-            if (typeof (windowedDepths[firstWindowIndex]) === 'undefined') {
+            if (windowedDepths.length < windowLength) {
                 windowedDepths.push([]);
             }
-            var windowDepth = windowedDepths[firstWindowIndex];
-            windowDepth.push(result);
+            result = parseInt(lineContents);
+            for (var i = windowIndex; i < (windowIndex + windowLength); i++) {
+                if (typeof (windowedDepths[windowIndex + i]) !== 'undefined') {
+                    if (windowedDepths[windowIndex + i].length == windowLength) {
+                        windowedDepths.push([]);
+                        windowIndex++;
+                    }
+                    windowedDepths[windowIndex + i].push(result);
+                }
+            }
         }
         return result;
     };
@@ -86,6 +93,9 @@ window.module = function () {
         });
     };
     var initializeB = function (options) {
+        windowedDepths = [];
+        windowIndex = 0;
+        windowLength = 3;
         var input = getInputFromUrl(options.inputUrl, options.inputUrlFallback, function (input) {
             var output = pocessInputB(input);
             if (answerB !== 0) {
