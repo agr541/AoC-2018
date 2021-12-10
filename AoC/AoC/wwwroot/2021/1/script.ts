@@ -28,27 +28,36 @@
     var windowedDepths = [];
     var windowIndex = 0;
     var windowLength = 3;
-    
+    var lastWindowDistance = 0;
+    var answerB = 0;
     var processLineB = function (line: string) {
         var result = 0;
         var lineContents = line.trim();
         if (lineContents.length > 0) {
 
-            if (windowedDepths.length < windowLength) {
+            if (windowedDepths.length < 3) {
                 windowedDepths.push([])
             }
 
-            result = parseInt(lineContents);
-            
-            for (var i = windowIndex; i < (windowIndex + windowLength); i++) {
-                if (typeof (windowedDepths[windowIndex + i]) !== 'undefined') {
-                    if (windowedDepths[windowIndex + i].length == windowLength) {
-                        windowedDepths.push([])
-                        windowIndex++;
-                    }
-                    windowedDepths[windowIndex + i].push(result);
-                    
+            if (windowedDepths[windowIndex].length == 3) {
+                
+                var windowDistance = windowedDepths[windowIndex].reduce((a, b) => a + b);
+                if (windowDistance > lastWindowDistance) {
+                    answerB++
+                    lastWindowDistance = windowDistance;
                 }
+                windowedDepths.push([])
+                windowIndex++;
+            }
+
+            result = parseInt(lineContents);
+
+            windowedDepths[windowIndex].push(result);
+            if (windowedDepths.length > windowIndex + 1) {
+                windowedDepths[windowIndex + 1].push(result);
+            }
+            if (windowedDepths.length > windowIndex + 2) {
+                windowedDepths[windowIndex + 2].push(result);
             }
         }
         return result;
