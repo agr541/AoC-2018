@@ -2,6 +2,10 @@
 (window as any).module = function () {
     var answerA: number = 0;
     var answerB: number = 0;
+    var windowedDepths:Array<Array<number>> = [];
+    var windowIndex: number = 0;
+    var windowSize: number = 3;
+        
     var processLineA = function (line: string) {
         var result = 0;
         var lineContents = line.trim();
@@ -12,8 +16,8 @@
     };
 
     var processLinesA = function (lines: string[]) {
-        var result = 0;
-        var lastDepth = null;
+        var result:number = 0;
+        var lastDepth:number|null = null;
         lines.forEach((line: string) => {
             var depth = processLineA(line);
             if (lastDepth != null && lastDepth < depth) {
@@ -25,39 +29,27 @@
         return result;
     };
 
-    var windowedDepths = [];
-    var windowIndex = 0;
-    var windowLength = 3;
-    var lastWindowDistance = 0;
-    var answerB = 0;
+    
     var processLineB = function (line: string) {
         var result = 0;
         var lineContents = line.trim();
         if (lineContents.length > 0) {
 
-            if (windowedDepths.length < 3) {
+            if (windowedDepths.length < windowSize) {
                 windowedDepths.push([])
             }
 
-            if (windowedDepths[windowIndex].length == 3) {
-                
-                var windowDistance = windowedDepths[windowIndex].reduce((a, b) => a + b);
-                if (windowDistance > lastWindowDistance) {
-                    answerB++
-                    lastWindowDistance = windowDistance;
-                }
+            if (windowedDepths[windowIndex].length == windowSize) {
                 windowedDepths.push([])
                 windowIndex++;
             }
 
             result = parseInt(lineContents);
 
-            windowedDepths[windowIndex].push(result);
-            if (windowedDepths.length > windowIndex + 1) {
-                windowedDepths[windowIndex + 1].push(result);
-            }
-            if (windowedDepths.length > windowIndex + 2) {
-                windowedDepths[windowIndex + 2].push(result);
+            for (var i = 0; i < windowSize; i++) {
+                if (windowedDepths.length > windowIndex + i) {
+                    windowedDepths[windowIndex + i].push(result);
+                }
             }
         }
         return result;
@@ -68,6 +60,20 @@
         lines.forEach(function (line) {
             processLineB(line);
         });
+
+        var windowDepths:number[] = windowedDepths.map(function (values: number[]) {
+            return values.reduce(function (a: number, b: number) {
+                return a + b;
+            });
+        });
+
+
+        for (var i: number = 1; i < windowDepths.length - 1; i++) {
+            if (windowDepths[i] > windowDepths[i - 1]) {
+                answerB++;
+            }
+        }
+        
         return result;
     };
 
@@ -93,8 +99,10 @@
     };
 
     var setOutput = function (outputSelector: string, outputValue: any) {
-        var output: HTMLInputElement = document.querySelector(outputSelector);
-        output.value = outputValue;
+        var output: HTMLInputElement | null = document.querySelector(outputSelector);
+        if (output !== null) {
+            output.value = outputValue;
+        }
     };
 
     var pocessInputA = function (input: string) {
@@ -117,11 +125,10 @@
         });
     };
 
-    var initializeB = function (options) {
+    var initializeB = function (options: Options) {
         windowedDepths = [];
         windowIndex = 0;
-        windowLength = 3;
-
+        
         var input = getInputFromUrl(options.inputUrl, options.inputUrlFallback, function (input) {
             var output = pocessInputB(input);
             if (answerB !== 0) {

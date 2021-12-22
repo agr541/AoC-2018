@@ -1,67 +1,98 @@
 // noprotect
+class Instruction {
+}
+;
+class Position {
+    constructor(horizontal, depth) {
+        this.horizontal = horizontal;
+        this.depth = depth;
+    }
+    Apply(i) {
+        switch (i.direction) {
+            case 'forward':
+                this.horizontal += i.value;
+                break;
+            case 'up':
+                this.depth -= i.value;
+                break;
+            case 'down':
+                this.depth += i.value;
+                break;
+        }
+    }
+}
+class AimedPosition {
+    constructor(horizontal, depth) {
+        this.horizontal = horizontal;
+        this.depth = depth;
+        this.aim = 0;
+    }
+    Apply(i) {
+        switch (i.direction) {
+            case 'forward':
+                this.horizontal += i.value;
+                this.depth += (i.value * this.aim);
+                break;
+            case 'up':
+                this.aim -= i.value;
+                break;
+            case 'down':
+                this.aim += i.value;
+                break;
+        }
+    }
+}
 window.module = function () {
     var answerA = 0;
     var answerB = 0;
-    var groupAnswers = [];
+    var currentPosition;
+    var currentAimedPosition;
     var processLine = function (line) {
+        var result = 0;
+        var instruction = parseInstruction(line);
+        currentPosition?.Apply(instruction);
+        currentAimedPosition?.Apply(instruction);
+        return result;
+    };
+    function parseInstruction(line) {
+        var splitted = line.split(' ');
+        var result = new Instruction();
+        result.direction = splitted[0];
+        result.value = parseInt(splitted[1]);
+        return result;
+    }
+    var processLineA = function (line) {
         var result = 0;
         var lineContents = line.trim();
         if (lineContents.length > 0) {
+            processLine(lineContents);
         }
         return result;
     };
     var processLinesA = function (lines) {
+        currentPosition = new Position(0, 0);
         var result = 0;
-        var currentGroup = null;
-        for (var line of lines) {
-            if (currentGroup === null || line === '') {
-                if (currentGroup !== null) {
-                    var copy = JSON.parse(JSON.stringify(currentGroup));
-                    groupAnswers.push(copy);
-                }
-                currentGroup = {
-                    answers: [],
-                    uniqueAnswers: 0,
-                    answersPerPerson: []
-                };
-            }
-            if (line === '') {
-                continue;
-            }
-            var answersPerPerson = [];
-            for (var answer of line) {
-                if (!currentGroup.answers.includes(answer)) {
-                    currentGroup.uniqueAnswers++;
-                }
-                answersPerPerson.push(answer);
-                currentGroup.answers.push(answer);
-            }
-            currentGroup.answersPerPerson.push(Array.from(answersPerPerson));
-        }
-        if (currentGroup !== null) {
-            groupAnswers.push(currentGroup);
-        }
-        var uniqueAnswers = groupAnswers
-            .map((a) => a.uniqueAnswers);
-        var uniqueAnswersSum = uniqueAnswers
-            .reduce((a, b) => a + b);
-        answerA = uniqueAnswersSum;
-        answerB = 0;
-        for (var ga of groupAnswers) {
-            var distinctAnswers = Array.from(new Set(ga.answers));
-            for (var a of distinctAnswers) {
-                if (ga.answersPerPerson.every(app => app.includes(a))) {
-                    answerB++;
-                }
-            }
+        lines.forEach((line) => {
+            result += processLineA(line);
+        });
+        result = currentPosition.depth * currentPosition.horizontal;
+        return result;
+    };
+    var processLineB = function (line) {
+        var result = 0;
+        var lineContents = line.trim();
+        if (lineContents.length > 0) {
+            result += processLine(lineContents);
         }
         return result;
     };
     var processLinesB = function (lines) {
-        var result = processLinesA(lines);
+        currentAimedPosition = new AimedPosition(0, 0);
+        var result = 0;
         lines.forEach(function (line) {
-            // processLine(line);
+            result += processLineB(line);
         });
+        result = currentAimedPosition.depth * currentAimedPosition.horizontal;
         return result;
     };
     var fallBackRequested = false;
@@ -85,7 +116,9 @@ window.module = function () {
     };
     var setOutput = function (outputSelector, outputValue) {
         var output = document.querySelector(outputSelector);
-        output.value = outputValue;
+        if (output !== null) {
+            output.value = outputValue;
+        }
     };
     var pocessInputA = function (input) {
         var lines = input.split('\r\n');
@@ -99,6 +132,7 @@ window.module = function () {
         var input = getInputFromUrl(options.inputUrl, options.inputUrlFallback, function (input) {
             var output = pocessInputA(input);
             if (answerA !== 0) {
+                output = answerA;
             }
             setOutput(options.outputSelector, output);
         });

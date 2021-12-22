@@ -1,12 +1,14 @@
 {
   "compilerOptions": {
-    "noImplicitAny": false,
+    "noImplicitAny": true,
+    "strictNullChecks": true,
     "noEmitOnError": true,
     "removeComments": false,
     "sourceMap": true,
     "target": "ES2021"
   },
   "exclude": [
+    "wwwroot/2020/**",
     "node_modules"
   ]
 }

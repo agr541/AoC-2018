@@ -2,17 +2,22 @@
 window.module = function () {
     var answerA = 0;
     var answerB = 0;
+    var processLine = function (line) {
+        var result = 0;
+        return result;
+    };
     var processLineA = function (line) {
         var result = 0;
         var lineContents = line.trim();
         if (lineContents.length > 0) {
+            processLine(lineContents);
         }
         return result;
     };
     var processLinesA = function (lines) {
         var result = 0;
         lines.forEach((line) => {
-            processLineA(line);
+            result += processLineA(line);
         });
         return result;
     };
@@ -20,14 +25,14 @@ window.module = function () {
         var result = 0;
         var lineContents = line.trim();
         if (lineContents.length > 0) {
-            processLineB(lineContents);
+            result += processLine(lineContents);
         }
         return result;
     };
     var processLinesB = function (lines) {
         var result = 0;
         lines.forEach(function (line) {
-            processLineB(line);
+            result += processLineB(line);
         });
         return result;
     };
@@ -52,7 +57,9 @@ window.module = function () {
     };
     var setOutput = function (outputSelector, outputValue) {
         var output = document.querySelector(outputSelector);
-        output.value = outputValue;
+        if (output !== null) {
+            output.value = outputValue;
+        }
     };
     var pocessInputA = function (input) {
         var lines = input.split('\r\n');

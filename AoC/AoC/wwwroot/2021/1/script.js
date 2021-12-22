@@ -2,6 +2,9 @@
 window.module = function () {
     var answerA = 0;
     var answerB = 0;
+    var windowedDepths = [];
+    var windowIndex = 0;
+    var windowSize = 3;
     var processLineA = function (line) {
         var result = 0;
         var lineContents = line.trim();
@@ -22,34 +25,22 @@ window.module = function () {
         });
         return result;
     };
-    var windowedDepths = [];
-    var windowIndex = 0;
-    var windowLength = 3;
-    var lastWindowDistance = 0;
-    var answerB = 0;
     var processLineB = function (line) {
         var result = 0;
         var lineContents = line.trim();
         if (lineContents.length > 0) {
-            if (windowedDepths.length < 3) {
+            if (windowedDepths.length < windowSize) {
                 windowedDepths.push([]);
             }
-            if (windowedDepths[windowIndex].length == 3) {
-                var windowDistance = windowedDepths[windowIndex].reduce((a, b) => a + b);
-                if (windowDistance > lastWindowDistance) {
-                    answerB++;
-                    lastWindowDistance = windowDistance;
-                }
+            if (windowedDepths[windowIndex].length == windowSize) {
                 windowedDepths.push([]);
                 windowIndex++;
             }
             result = parseInt(lineContents);
-            windowedDepths[windowIndex].push(result);
-            if (windowedDepths.length > windowIndex + 1) {
-                windowedDepths[windowIndex + 1].push(result);
-            }
-            if (windowedDepths.length > windowIndex + 2) {
-                windowedDepths[windowIndex + 2].push(result);
+            for (var i = 0; i < windowSize; i++) {
+                if (windowedDepths.length > windowIndex + i) {
+                    windowedDepths[windowIndex + i].push(result);
+                }
             }
         }
         return result;
@@ -59,6 +50,16 @@ window.module = function () {
         lines.forEach(function (line) {
             processLineB(line);
         });
+        var windowDepths = windowedDepths.map(function (values) {
+            return values.reduce(function (a, b) {
+                return a + b;
+            });
+        });
+        for (var i = 1; i < windowDepths.length - 1; i++) {
+            if (windowDepths[i] > windowDepths[i - 1]) {
+                answerB++;
+            }
+        }
         return result;
     };
     var fallBackRequested = false;
@@ -82,7 +83,9 @@ window.module = function () {
     };
     var setOutput = function (outputSelector, outputValue) {
         var output = document.querySelector(outputSelector);
-        output.value = outputValue;
+        if (output !== null) {
+            output.value = outputValue;
+        }
     };
     var pocessInputA = function (input) {
         var lines = input.split('\r\n');
@@ -104,7 +107,6 @@ window.module = function () {
     var initializeB = function (options) {
         windowedDepths = [];
         windowIndex = 0;
-        windowLength = 3;
         var input = getInputFromUrl(options.inputUrl, options.inputUrlFallback, function (input) {
             var output = pocessInputB(input);
             if (answerB !== 0) {

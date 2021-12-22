@@ -7,8 +7,10 @@ req.addEventListener('readystatechange', function () {
         var regex = /(\.\/\d+\/)/gm;
         var matches = resp.match(regex);
         var r = regex.exec(resp);
-        var lastMatch = matches[matches.length - 1];
-        window.location.href = '/' + year + '/' + lastMatch;
+        if (matches !== null) {
+            var lastMatch = matches[matches.length - 1];
+            window.location.href = '/' + year + '/' + lastMatch;
+        }
     }
 });
 req.open('GET', '/' + year + '/');

@@ -1,13 +1,82 @@
 // noprotect
+class Instruction {
+    public direction: string;
+    public value: number;
+};
+
+
+class Position {
+    public horizontal: number;
+    public depth: number;
+    public constructor(horizontal: number, depth: number) {
+        this.horizontal = horizontal;
+        this.depth = depth;
+    }
+
+    public Apply(i: Instruction) {
+        switch (i.direction) {
+            case 'forward':
+                this.horizontal += i.value;
+                break;
+            case 'up':
+                this.depth -= i.value;
+                break;
+            case 'down':
+                this.depth += i.value;
+                break;
+        }
+    }
+}
+
+
+class AimedPosition {
+    public horizontal: number;
+    public depth: number;
+    public aim: number;
+    public constructor(horizontal: number, depth: number) {
+        this.horizontal = horizontal;
+        this.depth = depth;
+        this.aim = 0;
+    }
+
+    public Apply(i: Instruction) {
+        switch (i.direction) {
+            case 'forward':
+                this.horizontal += i.value;
+                this.depth += (i.value * this.aim);
+                break;
+            case 'up':
+                this.aim -= i.value;
+                break;
+            case 'down':
+                this.aim += i.value;
+                break;
+        }
+    }
+}
+
 (window as any).module = function () {
     var answerA: number = 0;
     var answerB: number = 0;
-
+    var currentPosition: Position;
+    var currentAimedPosition: AimedPosition;
     var processLine = function (line: string) {
         var result = 0;
-
+        var instruction: Instruction = parseInstruction(line);
+        currentPosition?.Apply(instruction);
+        currentAimedPosition?.Apply(instruction);
         return result;
     };
+
+    function parseInstruction(line: string): Instruction {
+        var splitted = line.split(' ');
+        
+        var result: Instruction = new Instruction();
+        result.direction = splitted[0];
+        result.value = parseInt(splitted[1]);
+        return result;
+    }
+
 
     var processLineA = function (line: string) {
         var result = 0;
@@ -19,28 +88,35 @@
     };
 
     var processLinesA = function (lines: string[]) {
+        currentPosition = new Position(0, 0);
         var result = 0;
         lines.forEach((line: string) => {
-            result += processLineA(line);
+            result+=processLineA(line);
         });
+
+        result = currentPosition.depth * currentPosition.horizontal
         return result;
     };
 
     var processLineB = function (line: string) {
+        
         var result = 0;
         var lineContents = line.trim();
         if (lineContents.length > 0) {
             result += processLine(lineContents);
         }
+        
         return result;
     };
 
 
     var processLinesB = function (lines: string[]) {
+        currentAimedPosition = new AimedPosition(0, 0);
         var result = 0;
         lines.forEach(function (line) {
-            result += processLineB(line);
+            result +=processLineB(line);
         });
+        result = currentAimedPosition.depth * currentAimedPosition.horizontal
         return result;
     };
 
@@ -67,7 +143,7 @@
     };
 
     var setOutput = function (outputSelector: string, outputValue: any) {
-        var output: HTMLInputElement | null = document.querySelector(outputSelector);
+        var output: HTMLInputElement|null = document.querySelector(outputSelector);
         if (output !== null) {
             output.value = outputValue;
         }
@@ -122,4 +198,6 @@
         inputUrlFallback: string,
         outputSelector: string
     };
+
 };
+
