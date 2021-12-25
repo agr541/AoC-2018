@@ -1,5 +1,5 @@
-namespace day3 {
-    // noprotect
+// noprotect
+namespace day5 {
     class Grouping<K, V> {
         public key: K;
         public values: V[];
@@ -24,114 +24,122 @@ namespace day3 {
         }
     }
 
+    class Point {
+        static fromString(coords: string) {
+            var coordsParts = coords.split(',');
+            var x = parseInt(coordsParts[0]);
+            var y = parseInt(coordsParts[1]);
+            return new Point(x, y);
+        };
 
-    class Table {
-        public rows: Array<Array<number>>;
-        public columns: Array<Array<number>>;
-
-        public constructor() {
-            this.rows = new Array<Array<number>>();
-            this.columns = new Array<Array<number>>();
+        constructor(x: number, y: number) {
+            this.x = x;
+            this.y = y;
         }
 
-        public createNew(rows: Array<Array<number>>): Table {
-            var result: Table = new Table();
-            rows.forEach(r => result.addRow(r));
-            return result;
-        }
-
-        public addRow(bits: number[]) {
-            this.rows.push(bits);
-
-            bits.forEach((value, index, array) => {
-                if (this.columns.length <= index) {
-                    this.columns.push(new Array<number>());
-                }
-                this.columns[index].push(value);
-            }, this);
-        }
-
-        public calcGamma(): number {
-            var bit = this.columns.map(c => this.getMostCommon(c).toString()).join("");
-            return parseInt(bit, 2);
-        }
-
-        public calcEpsilon(): number {
-            var bit = this.columns.map(c => this.getLeastCommon(c).toString()).join("");
-            return parseInt(bit, 2);
-        }
-
-        private getLeastCommon(arr: number[], equalCountResult?: number): number {
-            var grouped = Grouping.groupBy(arr, (i) => i);
-            var sorted = grouped.sort((a, b) => a.values.length - b.values.length);
-            var result = sorted[0].key;
-            if (typeof equalCountResult !== "undefined" && sorted.length > 0 && sorted[0].values.length === sorted[1].values.length) {
-                result = equalCountResult;
-            }
-            return result;
-        }
-
-
-        private getMostCommon(arr: number[], equalCountResult?: number): number {
-            var grouped = Grouping.groupBy(arr, (i) => i);
-            var sorted = grouped.sort((b, a) => a.values.length - b.values.length);
-            var result = sorted[0].key;
-            if (typeof equalCountResult !== "undefined" && sorted.length > 0 && sorted[0].values.length === sorted[1].values.length) {
-                result = equalCountResult;
-            }
-            return result;
-        }
-
-        public calcOxygen(): number {
-            var result: number = 0;
-            var tmpTable = this.createNew(this.rows);
-
-
-            for (var position: number = 0; position < tmpTable.columns.length; position++) {
-                var mostCommonAtPosition = tmpTable.getMostCommon(tmpTable.columns[position], 1);
-                var currentRows = tmpTable.rows.filter(r => r[position] === mostCommonAtPosition);
-                tmpTable = tmpTable.createNew(currentRows);
-                if (tmpTable.rows.length === 1) {
-                    var resultString = tmpTable.rows[0].join("");
-                    result = parseInt(resultString, 2);
-                    break;
-                }
-            }
-
-            return result;
-        }
-
-        public calcCO2Scrub(): number {
-            var result: number = 0;
-            var tmpTable = this.createNew(this.rows);
-
-
-            for (var position: number = 0; position < tmpTable.columns.length; position++) {
-                var leastCommonAtPosition = tmpTable.getLeastCommon(tmpTable.columns[position], 0);
-                var currentRows = tmpTable.rows.filter(r => r[position] === leastCommonAtPosition);
-                tmpTable = tmpTable.createNew(currentRows);
-                if (tmpTable.rows.length === 1) {
-                    var resultString = tmpTable.rows[0].join("");
-                    result = parseInt(resultString, 2);
-                    break;
-                }
-            }
-
-            return result;
-        }
-
+        public x: number;
+        public y: number;
     }
 
+    class Grid {
+        public points: Point[];
+        public lines: Point[][];
+        public allowDiagonals:boolean;
 
+        public constructor() {
+            this.points = [];
+            this.lines = [];
+            this.allowDiagonals = false;
+        }
 
+        public addLineFromString(lineParts: string[]) {
+            var firstPoint = Point.fromString(lineParts[0]);
+            var secondPoint = Point.fromString(lineParts[1]);
+            this.addLine(firstPoint, secondPoint);
+        }
+
+        private addLine(pointA: Point, pointB: Point) {
+            var line = [pointA, pointB];
+            var pointsByX = line.sort((a, b) => a.x - b.x);
+            var pointsByY = line.sort((a, b) => a.y - b.y);
+            if (pointsByX[0].x === pointsByX[1].x) {
+                this.addVerticalLine(pointsByX[0], pointsByY[1].y - pointsByY[0].y);
+                this.lines.push(line);
+            } else if (pointsByY[0].y === pointsByY[1].y) {
+                this.addHorizontalLine(pointsByY[0], pointsByX[1].x - pointsByX[0].x);
+                this.lines.push(line);
+            } else if (this.allowDiagonals) {
+                this.addDiagonalLine(line[0], line[1]);
+                this.lines.push(line);
+            }
+        }
+        private addHorizontalLine(start: Point, length: number) {
+            for (var i = 0; i <= length; i++) {
+                this.points.push(new Point(start.x + i, start.y));
+            }
+        }
+
+        private addVerticalLine(start: Point, length: number) {
+            for (var i = 0; i <= length; i++) {
+                this.points.push(new Point(start.x, start.y + i));
+            }
+        }
+
+        private addDiagonalLine(start: Point, end: Point) {
+            var point = start;
+            var dX = start.x > end.x ? -1 : 1;
+            var dY = start.y > end.y ? -1 : 1;
+            this.points.push(new Point(start.x, start.y));
+            while (point.x != end.x && point.y != end.y) {
+                point.x += dX;
+                point.y += dY;
+                this.points.push(new Point(point.x, point.y));
+            }
+        }
+
+        public async drawGrid() {
+
+            var result = "";
+            var largestX = this.points.reduce((p, c) => p.x > c.x ? p : c).x;
+            var largestY = this.points.reduce((p, c) => p.y > c.y ? p : c).y;
+            var width = largestX + 1;
+            var height = largestY + 1;
+            var arr: number[] = [];
+            arr.length = width * height;
+            arr.fill(0);
+
+            this.points.forEach(p => {
+                var pos = p.x + (p.y * height);
+                arr[pos]++;
+            });
+
+            arr.forEach((p, i) => {
+                if (i > 0 && i % width == 0) {
+                    result += "\r\n";
+                }
+                result += p === 0 ? "." : p.toString();
+            })
+            return result;
+        }
+
+        public getOverlapCount() {
+            var overlaps = Grouping.groupBy(this.points, (value) => "" + value.x + "," + value.y);
+            var overlapsWith2OrMore = overlaps.filter(f => f.values.length > 1);
+            return overlapsWith2OrMore.length;
+        }
+    }
+
+    // noprotect
     (window as any).module = function () {
         var answerA: number = 0;
         var answerB: number = 0;
-        var table = new Table();
+        var grid: Grid;
+
         var processLine = function (line: string) {
             var result = 0;
-            var bits = line.split('').map((i) => parseInt(i));
-            table.addRow(bits);
+            var splitted = line.split(' -> ');
+            grid.addLineFromString(splitted);
+
             return result;
         };
 
@@ -145,36 +153,65 @@ namespace day3 {
         };
 
         var processLinesA = function (lines: string[]) {
+
+            grid = new Grid();
             var result = 0;
-            table = new Table();
             lines.forEach((line: string) => {
                 result += processLineA(line);
             });
-            answerA = table.calcEpsilon() * table.calcGamma();
+
+            if (lines.length < 100) {
+                var debugOut = createDebugOut();
+                writeOutput(grid, debugOut);
+            }
+            
+            answerA = grid.getOverlapCount();
             return result;
         };
 
-        var processLineB = function (line: string) {
-            var result = 0;
+        var createDebugOut = function () {
+            var debugOut = document.getElementById("debugOut");
+            if (debugOut === null) {
+                debugOut = document.createElement("pre");
+                debugOut.id = "debugOut";
+                document.body.append(debugOut);
+            }
 
+            debugOut.innerHTML = "loading...";
+            return debugOut;
+        }
+
+        var writeOutput = async function (grid: Grid, elem: HTMLElement) {
+            var gridString = await grid.drawGrid();
+            elem.innerHTML = gridString;
+        }
+
+        var processLineB = function (line: string) {
+           
+            var result = 0;
             var lineContents = line.trim();
             if (lineContents.length > 0) {
                 result += processLine(lineContents);
             }
-
             return result;
         };
 
 
         var processLinesB = function (lines: string[]) {
+            grid = new Grid();
+            grid.allowDiagonals = true;
+
             var result = 0;
-            table = new Table();
             lines.forEach(function (line) {
                 result += processLineB(line);
             });
-            var oxy = table.calcOxygen();
-            var co2 = table.calcCO2Scrub();
-            answerB = oxy * co2;
+            if (lines.length < 100) {
+                var debugOut = createDebugOut();
+                writeOutput(grid, debugOut);
+            }
+
+            answerB = grid.getOverlapCount();
+            
             return result;
         };
 

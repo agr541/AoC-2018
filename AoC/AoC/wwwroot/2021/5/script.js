@@ -1,6 +1,6 @@
-var day3;
-(function (day3) {
-    // noprotect
+// noprotect
+var day5;
+(function (day5) {
     class Grouping {
         static groupBy(list, keyGetter) {
             var result = new Array();
@@ -21,90 +21,104 @@ var day3;
             return result;
         }
     }
-    class Table {
+    class Point {
+        constructor(x, y) {
+            this.x = x;
+            this.y = y;
+        }
+        static fromString(coords) {
+            var coordsParts = coords.split(',');
+            var x = parseInt(coordsParts[0]);
+            var y = parseInt(coordsParts[1]);
+            return new Point(x, y);
+        }
+        ;
+    }
+    class Grid {
         constructor() {
-            this.rows = new Array();
-            this.columns = new Array();
+            this.points = [];
+            this.lines = [];
+            this.allowDiagonals = false;
         }
-        createNew(rows) {
-            var result = new Table();
-            rows.forEach(r => result.addRow(r));
-            return result;
+        addLineFromString(lineParts) {
+            var firstPoint = Point.fromString(lineParts[0]);
+            var secondPoint = Point.fromString(lineParts[1]);
+            this.addLine(firstPoint, secondPoint);
         }
-        addRow(bits) {
-            this.rows.push(bits);
-            bits.forEach((value, index, array) => {
-                if (this.columns.length <= index) {
-                    this.columns.push(new Array());
+        addLine(pointA, pointB) {
+            var line = [pointA, pointB];
+            var pointsByX = line.sort((a, b) => a.x - b.x);
+            var pointsByY = line.sort((a, b) => a.y - b.y);
+            if (pointsByX[0].x === pointsByX[1].x) {
+                this.addVerticalLine(pointsByX[0], pointsByY[1].y - pointsByY[0].y);
+                this.lines.push(line);
+            }
+            else if (pointsByY[0].y === pointsByY[1].y) {
+                this.addHorizontalLine(pointsByY[0], pointsByX[1].x - pointsByX[0].x);
+                this.lines.push(line);
+            }
+            else if (this.allowDiagonals) {
+                this.addDiagonalLine(line[0], line[1]);
+                this.lines.push(line);
+            }
+        }
+        addHorizontalLine(start, length) {
+            for (var i = 0; i <= length; i++) {
+                this.points.push(new Point(start.x + i, start.y));
+            }
+        }
+        addVerticalLine(start, length) {
+            for (var i = 0; i <= length; i++) {
+                this.points.push(new Point(start.x, start.y + i));
+            }
+        }
+        addDiagonalLine(start, end) {
+            var point = start;
+            var dX = start.x > end.x ? -1 : 1;
+            var dY = start.y > end.y ? -1 : 1;
+            this.points.push(new Point(start.x, start.y));
+            while (point.x != end.x && point.y != end.y) {
+                point.x += dX;
+                point.y += dY;
+                this.points.push(new Point(point.x, point.y));
+            }
+        }
+        async drawGrid() {
+            var result = "";
+            var largestX = this.points.reduce((p, c) => p.x > c.x ? p : c).x;
+            var largestY = this.points.reduce((p, c) => p.y > c.y ? p : c).y;
+            var width = largestX + 1;
+            var height = largestY + 1;
+            var arr = [];
+            arr.length = width * height;
+            arr.fill(0);
+            this.points.forEach(p => {
+                var pos = p.x + (p.y * height);
+                arr[pos]++;
+            });
+            arr.forEach((p, i) => {
+                if (i > 0 && i % width == 0) {
+                    result += "\r\n";
                 }
-                this.columns[index].push(value);
-            }, this);
-        }
-        calcGamma() {
-            var bit = this.columns.map(c => this.getMostCommon(c).toString()).join("");
-            return parseInt(bit, 2);
-        }
-        calcEpsilon() {
-            var bit = this.columns.map(c => this.getLeastCommon(c).toString()).join("");
-            return parseInt(bit, 2);
-        }
-        getLeastCommon(arr, equalCountResult) {
-            var grouped = Grouping.groupBy(arr, (i) => i);
-            var sorted = grouped.sort((a, b) => a.values.length - b.values.length);
-            var result = sorted[0].key;
-            if (typeof equalCountResult !== "undefined" && sorted.length > 0 && sorted[0].values.length === sorted[1].values.length) {
-                result = equalCountResult;
-            }
+                result += p === 0 ? "." : p.toString();
+            });
             return result;
         }
-        getMostCommon(arr, equalCountResult) {
-            var grouped = Grouping.groupBy(arr, (i) => i);
-            var sorted = grouped.sort((b, a) => a.values.length - b.values.length);
-            var result = sorted[0].key;
-            if (typeof equalCountResult !== "undefined" && sorted.length > 0 && sorted[0].values.length === sorted[1].values.length) {
-                result = equalCountResult;
-            }
-            return result;
-        }
-        calcOxygen() {
-            var result = 0;
-            var tmpTable = this.createNew(this.rows);
-            for (var position = 0; position < tmpTable.columns.length; position++) {
-                var mostCommonAtPosition = tmpTable.getMostCommon(tmpTable.columns[position], 1);
-                var currentRows = tmpTable.rows.filter(r => r[position] === mostCommonAtPosition);
-                tmpTable = tmpTable.createNew(currentRows);
-                if (tmpTable.rows.length === 1) {
-                    var resultString = tmpTable.rows[0].join("");
-                    result = parseInt(resultString, 2);
-                    break;
-                }
-            }
-            return result;
-        }
-        calcCO2Scrub() {
-            var result = 0;
-            var tmpTable = this.createNew(this.rows);
-            for (var position = 0; position < tmpTable.columns.length; position++) {
-                var leastCommonAtPosition = tmpTable.getLeastCommon(tmpTable.columns[position], 0);
-                var currentRows = tmpTable.rows.filter(r => r[position] === leastCommonAtPosition);
-                tmpTable = tmpTable.createNew(currentRows);
-                if (tmpTable.rows.length === 1) {
-                    var resultString = tmpTable.rows[0].join("");
-                    result = parseInt(resultString, 2);
-                    break;
-                }
-            }
-            return result;
+        getOverlapCount() {
+            var overlaps = Grouping.groupBy(this.points, (value) => "" + value.x + "," + value.y);
+            var overlapsWith2OrMore = overlaps.filter(f => f.values.length > 1);
+            return overlapsWith2OrMore.length;
         }
     }
+    // noprotect
     window.module = function () {
         var answerA = 0;
         var answerB = 0;
-        var table = new Table();
+        var grid;
         var processLine = function (line) {
             var result = 0;
-            var bits = line.split('').map((i) => parseInt(i));
-            table.addRow(bits);
+            var splitted = line.split(' -> ');
+            grid.addLineFromString(splitted);
             return result;
         };
         var processLineA = function (line) {
@@ -116,13 +130,31 @@ var day3;
             return result;
         };
         var processLinesA = function (lines) {
+            grid = new Grid();
             var result = 0;
-            table = new Table();
             lines.forEach((line) => {
                 result += processLineA(line);
             });
-            answerA = table.calcEpsilon() * table.calcGamma();
+            if (lines.length < 100) {
+                var debugOut = createDebugOut();
+                writeOutput(grid, debugOut);
+            }
+            answerA = grid.getOverlapCount();
             return result;
+        };
+        var createDebugOut = function () {
+            var debugOut = document.getElementById("debugOut");
+            if (debugOut === null) {
+                debugOut = document.createElement("pre");
+                debugOut.id = "debugOut";
+                document.body.append(debugOut);
+            }
+            debugOut.innerHTML = "loading...";
+            return debugOut;
+        };
+        var writeOutput = async function (grid, elem) {
+            var gridString = await grid.drawGrid();
+            elem.innerHTML = gridString;
         };
         var processLineB = function (line) {
             var result = 0;
@@ -133,14 +165,17 @@ var day3;
             return result;
         };
         var processLinesB = function (lines) {
+            grid = new Grid();
+            grid.allowDiagonals = true;
             var result = 0;
-            table = new Table();
             lines.forEach(function (line) {
                 result += processLineB(line);
             });
-            var oxy = table.calcOxygen();
-            var co2 = table.calcCO2Scrub();
-            answerB = oxy * co2;
+            if (lines.length < 100) {
+                var debugOut = createDebugOut();
+                writeOutput(grid, debugOut);
+            }
+            answerB = grid.getOverlapCount();
             return result;
         };
         var fallBackRequested = false;
@@ -206,5 +241,5 @@ var day3;
             run: initialize
         };
     };
-})(day3 || (day3 = {}));
+})(day5 || (day5 = {}));
 //# sourceMappingURL=script.js.map
