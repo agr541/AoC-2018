@@ -44,8 +44,6 @@
         lines.forEach((line: string) => {
             result += processLineA(line);
         });
-
-        answerA = digitCounts[1] + digitCounts[4] + digitCounts[7] + digitCounts[8];
         return result;
     };
 
@@ -78,22 +76,75 @@
                 }
             });
             var remainingDigitPatterns = digits.filter(f => f != digitPatterns[1] && f != digitPatterns[4] && f != digitPatterns[7] && f != digitPatterns[8]);
+            /*
+             *   0:      1:      2:      3:      4:
+                 aaaa    ....    aaaa    aaaa    ....
+                b    c  .    c  .    c  .    c  b    c
+                b    c  .    c  .    c  .    c  b    c
+                 ....    ....    dddd    dddd    dddd
+                e    f  .    f  e    .  .    f  .    f
+                e    f  .    f  e    .  .    f  .    f
+                 gggg    ....    gggg    gggg    ....
+                
+                  5:      6:      7:      8:      9:
+                 aaaa    aaaa    aaaa    aaaa    aaaa
+                b    .  b    .  .    c  b    c  b    c
+                b    .  b    .  .    c  b    c  b    c
+                 dddd    dddd    ....    dddd    dddd
+                .    f  e    f  .    f  e    f  .    f         
+                .    f  e    f  .    f  e    f  .    f
+                 gggg    gggg    ....    gggg    gggg
+             */
+          
+            var digit3Canditates = remainingDigitPatterns.filter(p => p.length === 5);
+            digitPatterns[3] = findOverlapsWith(digit3Canditates, digitPatterns[7]);
+            remainingDigitPatterns = remainingDigitPatterns.filter(p => p != digitPatterns[3]);
+
+            var digit9Canditates = remainingDigitPatterns.filter(p => p.length === 6);
+            digitPatterns[9] = findOverlapsWith(digit9Canditates, digitPatterns[3]);
+            remainingDigitPatterns = remainingDigitPatterns.filter(p => p != digitPatterns[9]);
+
+            var digit0Canditates = remainingDigitPatterns.filter(p => p.length === 6);
+            digitPatterns[0] = findOverlapsWith(digit0Canditates, digitPatterns[7]);
+            remainingDigitPatterns = remainingDigitPatterns.filter(p => p != digitPatterns[0]);
+
+            var digit6Canditates = remainingDigitPatterns.filter(p => p.length === 6);
+            digitPatterns[6] = digit6Canditates[0];
+            remainingDigitPatterns = remainingDigitPatterns.filter(p => p != digitPatterns[6]);
+
+            var digit5Canditates = remainingDigitPatterns.filter(p => p.length === 5);
+
             
-            var possible9Patterns = remainingDigitPatterns;
+            var matchFound = findOverlapsWith([digitPatterns[6]], digit5Canditates[0]);
+            if (matchFound === '') {
+                digitPatterns[5] = digit5Canditates[1];
+                digitPatterns[2] = digit5Canditates[0];
+            } else {
+                digitPatterns[5] = digit5Canditates[0];
+                digitPatterns[2] = digit5Canditates[1];
+            }
+            digitPatterns.forEach((v: string, i:number) => {
+                digitPatterns[i] = v.split('').sort().join('');
+            });
 
-            digitPatterns[9] = findDigit9();
-            digitPatterns[6] = findDigit6();
-            digitPatterns[5] = findDigit5();
-            digitPatterns[2] = findDigit2();
-            digitPatterns[3] = findDigit3();
-            digitPatterns[0] = findDigit0();
-
-            
-
+            var outputPatterns = splitted[1].split(' ');
+            var outputNumberString = '';
+            outputPatterns.forEach(outputPattern => {
+                var opSorted = outputPattern.split('').sort().join('');
+                outputNumberString += digitPatterns.indexOf(opSorted);
+            })
+            result = parseInt(outputNumberString);
         }
         return result;
     };
 
+    var findOverlapsWith = function (candidates: string[], pattern: string) {
+        var result = candidates.filter((candidate) => pattern.split('').every(ch => candidate.indexOf(ch) > -1));
+        if (result.length === 0) {
+            return '';
+        }
+        return result[0];
+    }
 
     var processLinesB = function (lines: string[]) {
         var result = 0;
@@ -102,7 +153,6 @@
         });
         return result;
     };
-
 
     var fallBackRequested: boolean = false;
     var getInputFromUrl = function (url: string, fallbackUrl: string, callBack: HandleInputCallback) {
