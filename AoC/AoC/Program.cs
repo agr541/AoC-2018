@@ -18,6 +18,11 @@ app.UseDefaultFiles(new DefaultFilesOptions
     DefaultFileNames = new
     List<string> { "index.html" }
 });
+
+app.MapGet("get-input", AocInputProxy.GetInput);
+app.MapGet("get-input/{session}", AocInputProxy.GetInput);
+
+
 app.UseDirectoryBrowser();
 app.UseFileServer(true);
 app.UseStaticFiles();

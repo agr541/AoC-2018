@@ -8,10 +8,19 @@
     ".NETCoreApp,Version=v6.0": {
       "AoC/1.0.0": {
         "dependencies": {
+          "Microsoft.AspNetCore.Authentication.Google": "6.0.1",
           "Microsoft.TypeScript.Compiler": "3.1.5"
         },
         "runtime": {
           "AoC.dll": {}
+        }
+      },
+      "Microsoft.AspNetCore.Authentication.Google/6.0.1": {
+        "runtime": {
+          "lib/net6.0/Microsoft.AspNetCore.Authentication.Google.dll": {
+            "assemblyVersion": "6.0.1.0",
+            "fileVersion": "6.0.121.56714"
+          }
         }
       },
       "Microsoft.TypeScript.Compiler/3.1.5": {}
@@ -22,6 +31,13 @@
       "type": "project",
       "serviceable": false,
       "sha512": ""
+    },
+    "Microsoft.AspNetCore.Authentication.Google/6.0.1": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-8eCnlAXsczzoVcoom0QwPGD2X8A/cCjROFmP4jkGqm9FUjU6A15MdMrLF+aWzfloptiAZlmPIQCilLfodZM01A==",
+      "path": "microsoft.aspnetcore.authentication.google/6.0.1",
+      "hashPath": "microsoft.aspnetcore.authentication.google.6.0.1.nupkg.sha512"
     },
     "Microsoft.TypeScript.Compiler/3.1.5": {
       "type": "package",

@@ -18,14 +18,6 @@
         return result;
     };
 
-    var processLinesA = function (lines: string[]) {
-        var result = 0;
-        lines.forEach((line: string) => {
-            result += processLineA(line);
-        });
-        return result;
-    };
-
     var processLineB = function (line: string) {
         var result = 0;
         var lineContents = line.trim();
@@ -35,6 +27,13 @@
         return result;
     };
 
+    var processLinesA = function (lines: string[]) {
+        var result = 0;
+        lines.forEach((line: string) => {
+            result += processLineA(line);
+        });
+        return result;
+    };
 
     var processLinesB = function (lines: string[]) {
         var result = 0;
@@ -44,26 +43,55 @@
         return result;
     };
 
-
     var fallBackRequested: boolean = false;
     var getInputFromUrl = function (url: string, fallbackUrl: string, callBack: HandleInputCallback) {
         var req = new XMLHttpRequest();
-        req.addEventListener('readystatechange', function () {
+        req.addEventListener('readystatechange', async function () {
             var xhr = this;
             if (xhr.readyState === 4 && xhr.status === 200) {
-                if (req.responseText.length !== 0 && fallbackUrl !== 'undefined') {
+                if (req.responseText.length !== 0) {
                     callBack(req.responseText);
-                }
-                if (req.responseText.length === 0 && typeof fallbackUrl !== 'undefined' && fallBackRequested === false) {
+                } else if (fallBackRequested === true || fallbackUrl === null) {
+                    await requestAocInput();
+                } else {
                     fallBackRequested = true;
                     req.open('GET', fallbackUrl);
                     req.send();
                 }
             }
 
+            async function requestAocInput() {
+                var aocInputUrl = await getAocInputUrl();
+                req.open('GET', aocInputUrl);
+                req.send();
+            }
+
+            async function getAocInputUrl() {
+                var result = '/get-input';
+                var cookie = await eval('window.cookieStore.get(\'session\');');
+                var storedSession = null;
+                if (cookie !== null) {
+                    storedSession = cookie.value;
+                }
+                if (storedSession === null) {
+                    var newSession = prompt('Enter session cookie from aoc value');
+                    if (newSession !== null) {
+                        storedSession = newSession;
+                        result += '?session=' + newSession;
+                    }
+                }
+                return result;
+            }
         });
         req.open('GET', url);
         req.send();
+    };
+    var debugOutput: HTMLPreElement;
+    var addDebugOutput = function () {
+        if (debugOutput === null) {
+            debugOutput = document.createElement("pre");
+            document.body.append(debugOutput);
+        }
     };
 
     var setOutput = function (outputSelector: string, outputValue: any) {
@@ -104,6 +132,7 @@
     };
 
     var initialize = (options: Options) => {
+        addDebugOutput();
         if (options.runPart === 1) {
             initializeA(options);
         } else if (options.runPart === 2) {
