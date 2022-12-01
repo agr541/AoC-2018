@@ -1,6 +1,5 @@
 // noprotect
 (window as any).module = function () {
-
     var answerA: number = 0;
     var answerB: number = 0;
 
@@ -33,8 +32,6 @@
         lines.forEach((line: string) => {
             result += processLineA(line);
         });
-
-        debugOutput.innerHTML = 'test';
         return result;
     };
 
@@ -89,10 +86,9 @@
         req.open('GET', url);
         req.send();
     };
-
     var debugOutput: HTMLPreElement;
     var addDebugOutput = function () {
-        if (typeof debugOutput === 'undefined') {
+        if (debugOutput === null) {
             debugOutput = document.createElement("pre");
             document.body.append(debugOutput);
         }

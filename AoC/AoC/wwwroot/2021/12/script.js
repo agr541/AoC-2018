@@ -27,7 +27,6 @@ window.module = function () {
         lines.forEach((line) => {
             result += processLineA(line);
         });
-        debugOutput.innerHTML = 'test';
         return result;
     };
     var processLinesB = function (lines) {
@@ -82,7 +81,7 @@ window.module = function () {
     };
     var debugOutput;
     var addDebugOutput = function () {
-        if (typeof debugOutput === 'undefined') {
+        if (debugOutput === null) {
             debugOutput = document.createElement("pre");
             document.body.append(debugOutput);
         }

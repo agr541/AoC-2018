@@ -8,30 +8,30 @@
     </style>
 </head>
 <body>
-    <input type="button"
-           data-run-part="1"
-           data-input-url="exampleA.txt"
-           data-input-url-fallback=""
+    <input type="button" 
+           data-run-part="1" 
+           data-input-url="exampleA.txt" 
+           data-input-url-fallback="" 
            value="Part 1 example"><br />
-    <input type="button"
-           data-run-part="1"
-           data-input-url="inputA.txt"
+    <input type="button" 
+           data-run-part="1" 
+           data-input-url="inputA.txt" 
            value="Part 1 input"><br />
-    <input type="button"
-           data-run-part="2"
-           data-input-url="exampleB.txt"
-           data-input-url-fallback="exampleA.txt"
+    <input type="button" 
+           data-run-part="2" 
+           data-input-url="exampleB.txt" 
+           data-input-url-fallback="exampleA.txt" 
            value="Part 2 example"><br />
-    <input type="button"
-           data-run-part="2"
-           data-input-url="inputB.txt"
-           data-input-url-fallback="inputA.txt"
+    <input type="button" 
+           data-run-part="2" 
+           data-input-url="inputB.txt" 
+           data-input-url-fallback="inputA.txt" 
            value="Part 2 input"><br />
     <label for="output">Output:</label><input type="text" id="output" />
     <script src="script.js"></script>
     <script>
         var buttons = document.querySelectorAll('input[type="button"]');
-
+        
         buttons.forEach(button => {
             var runPart = parseInt(button.getAttribute('data-run-part'));
             var inputUrl = button.getAttribute('data-input-url');
