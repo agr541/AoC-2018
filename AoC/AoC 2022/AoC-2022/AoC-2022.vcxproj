@@ -138,6 +138,7 @@
     <ClCompile Include="Days\Day2.cpp" />
     <ClCompile Include="Days\Day.cpp" />
     <ClCompile Include="Days\Day1.cpp" />
+    <ClCompile Include="Days\Day3.cpp" />
     <ClCompile Include="Days\DayTemplate\DayTemplate.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -145,6 +146,7 @@
     <ClInclude Include="Days\Day2.h" />
     <ClInclude Include="Days\Day.h" />
     <ClInclude Include="Days\Day1.h" />
+    <ClInclude Include="Days\Day3.h" />
     <ClInclude Include="Days\DayTemplate\DayTemplate.h" />
   </ItemGroup>
   <ItemGroup>
@@ -159,6 +161,12 @@
       <DeploymentContent>true</DeploymentContent>
     </Text>
     <Text Include="Resources\Day2\input.txt">
+      <DeploymentContent>true</DeploymentContent>
+    </Text>
+    <Text Include="Resources\Day3\example.txt">
+      <DeploymentContent>true</DeploymentContent>
+    </Text>
+    <Text Include="Resources\Day3\input.txt">
       <DeploymentContent>true</DeploymentContent>
     </Text>
   </ItemGroup>

@@ -10,8 +10,10 @@
 
 #include "Days/Day1.h"
 #include "Days/Day2.h"
+#include "Days/Day3.h"
 using namespace std;
 
+Day* days[] = { new Day1(), new Day2(), new Day3() };
 Day* selectedDay = NULL;
 
 void renderMenu() {
@@ -29,8 +31,10 @@ void renderMenu() {
 		printf("X. switch input\n");
 	}
 
-	printf("1. Day 1\n");
-	printf("2. Day 2\n");
+	int i = 1;
+	for (Day* day : days) {
+		printf("%i. %s\n", i++, day->GetName().c_str());
+	}
 
 	printf("C. Clear\n");
 	printf("Q. Quit\n");
@@ -45,45 +49,35 @@ void handleInput() {
 
 		std::cin.read(input, 1);
 		std::cin.ignore();
-
+		int dayIndex = (input[0] - 49);
 		switch (input[0]) {
-		case 'a':
-		case 'A':
+		case 'a': case 'A':
 			if (selectedDay != NULL) {
 				selectedDay->RunA();
 			}
 			break;
-		case 'b':
-		case 'B':
+		case 'b': case 'B':
 			if (selectedDay != NULL) {
 				selectedDay->RunB();
 			}
 			break;
-		case 'x':
-		case 'X':
+		case 'x': case 'X':
 			if (selectedDay != NULL) {
 				selectedDay->SwitchInput();
 			}
 			renderMenu();
 			break;
-		case '1':
+		case '0': case '1': case '2': case '3': case '4': case '5': case '6': case '7': case '8': case '9': 
 			printf("Selected day %c\n", input[0]);
-			selectedDay = new Day1();
+			selectedDay = days[dayIndex];
 			renderMenu();
 			break;
-		case '2':
-			printf("Selected day %c\n", input[0]);
-			selectedDay = new Day2();
-			renderMenu();
-			break;
-		case 'C':
-		case 'c':
+		case 'C': case 'c':
 			selectedDay = NULL;
 			system("cls");
 			renderMenu();
 			break;
-		case 'Q':
-		case 'q':
+		case 'Q': case 'q':
 			done = true;
 			break;
 		default:

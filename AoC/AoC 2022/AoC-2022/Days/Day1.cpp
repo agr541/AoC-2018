@@ -8,8 +8,8 @@ using namespace std;
 
 
 Day1::Day1() {
-	initialInput = "Resources\\Day2\\input.txt";
-	secondaryInput = "Resources\\Day2\\example.txt";
+	initialInput = "Resources\\Day1\\input.txt";
+	secondaryInput = "Resources\\Day1\\example.txt";
 	input = initialInput;
 }
 
