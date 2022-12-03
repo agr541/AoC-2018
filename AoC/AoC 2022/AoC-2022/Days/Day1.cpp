@@ -1,4 +1,4 @@
-
+#include "Day.h"
 #include "Day1.h"
 #include <stdio.h>
 #include <string>
@@ -6,30 +6,9 @@
 
 using namespace std;
 
-
-Day1::Day1() {
-	initialInput = "Resources\\Day1\\input.txt";
-	secondaryInput = "Resources\\Day1\\example.txt";
-	input = initialInput;
+Day1::Day1() : Day("Day 1") {
+	
 }
-
-string Day1::GetName()
-{
-	return "Day 1";
-}
-string Day1::GetInput()
-{
-	return input;
-}
-void Day1::SwitchInput() {
-	if (input == initialInput) {
-		input = secondaryInput;
-	}
-	else {
-		input = initialInput;
-	}
-}
-
 
 void Day1::ProcessInputA(ifstream& myfile)
 {

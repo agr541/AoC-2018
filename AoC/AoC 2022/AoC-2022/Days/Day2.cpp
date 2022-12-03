@@ -5,28 +5,10 @@
 
 using namespace std;
 
-Day2::Day2() {
-	initialInput = "Resources\\Day2\\input.txt";
-	secondaryInput = "Resources\\Day2\\example.txt";
-	input = initialInput;
+Day2::Day2() 
+	: Day("Day 2") {
 }
 
-string Day2::GetName()
-{
-	return "Day 2";
-}
-string Day2::GetInput()
-{
-	return input;
-}
-void Day2::SwitchInput() {
-	if (input == initialInput) {
-		input = secondaryInput;
-	}
-	else {
-		input = initialInput;
-	}
-}
 
 /// <summary>
 /// example:

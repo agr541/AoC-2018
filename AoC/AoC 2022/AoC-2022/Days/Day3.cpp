@@ -7,27 +7,7 @@
 
 using namespace std;
 
-Day3::Day3() {
-	initialInput = "Resources\\Day3\\input.txt";
-	secondaryInput = "Resources\\Day3\\example.txt";
-	input = initialInput;
-}
-
-string Day3::GetName()
-{
-	return "Day 3";
-}
-string Day3::GetInput()
-{
-	return input;
-}
-void Day3::SwitchInput() {
-	if (input == initialInput) {
-		input = secondaryInput;
-	}
-	else {
-		input = initialInput;
-	}
+Day3::Day3() : Day("Day 3") {
 }
 
 void Day3::ProcessInputA(ifstream& myfile)

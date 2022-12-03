@@ -150,23 +150,23 @@
     <ClInclude Include="Days\DayTemplate\DayTemplate.h" />
   </ItemGroup>
   <ItemGroup>
-    <Text Include="Resources\Day1\example.txt">
+    <Text Include="Resources\Day 1\example.txt">
       <DeploymentContent>true</DeploymentContent>
     </Text>
-    <Text Include="Resources\Day1\input.txt">
+    <Text Include="Resources\Day 1\input.txt">
       <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</DeploymentContent>
       <DeploymentContent>false</DeploymentContent>
     </Text>
-    <Text Include="Resources\Day2\example.txt">
+    <Text Include="Resources\Day 2\example.txt">
       <DeploymentContent>true</DeploymentContent>
     </Text>
-    <Text Include="Resources\Day2\input.txt">
+    <Text Include="Resources\Day 2\input.txt">
       <DeploymentContent>true</DeploymentContent>
     </Text>
-    <Text Include="Resources\Day3\example.txt">
+    <Text Include="Resources\Day 3\example.txt">
       <DeploymentContent>true</DeploymentContent>
     </Text>
-    <Text Include="Resources\Day3\input.txt">
+    <Text Include="Resources\Day 3\input.txt">
       <DeploymentContent>true</DeploymentContent>
     </Text>
   </ItemGroup>

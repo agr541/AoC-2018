@@ -1,19 +1,26 @@
-#pragma once
 
-#include <stdio.h>
+#pragma once
 #include <string>
 #include <fstream>
+#include <vector>
+
+
 using namespace std;
 
 class Day
 {
+protected:
+	string _name;
+	size_t _inputIndex = 0;
+	vector<string> _inputs;
+
 public:
-	Day();
+	Day(string name);
 
-	virtual string GetName() = 0;
-	virtual string GetInput() = 0;
+	string GetName();
+	string GetInput();
 
-	virtual void SwitchInput() = 0;
+	void SwitchInput();
 	void RunA();
 	virtual void ProcessInputA(ifstream& myfile) = 0;
 	void RunB();
