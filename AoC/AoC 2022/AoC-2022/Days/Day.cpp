@@ -19,8 +19,8 @@ Day::Day(string name)
 	for (auto& p : std::filesystem::directory_iterator{ resources })
 	{
 		if (p.is_regular_file()) {
-			string filename = p.path().filename().string();
-			_inputs.push_back(filename);
+			
+			_inputs.push_back(p.path().string());
 		}
 	}
 }
@@ -39,7 +39,7 @@ string Day::GetInput()
 void Day::SwitchInput()
 {
 	_inputIndex++;
-	if (_inputIndex > _inputs.max_size()) {
+	if (_inputIndex > _inputs.size()) {
 		_inputIndex = 0;
 	}
 }

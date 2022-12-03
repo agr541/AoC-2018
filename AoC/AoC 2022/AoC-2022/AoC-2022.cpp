@@ -71,11 +71,12 @@ void handleInput() {
 			break;
 		case '0': case '1': case '2': case '3': case '4': case '5': case '6': case '7': case '8': case '9': {
 			int index = (int)input[0] - 49;
-			if (days.size() > index) {
+			if (days.size() > index && index > -1) {
 				selectedDay = days[index];
 			}
-			printf("Selected day %c\n", selectedDay->GetName());
-
+			else {
+				printf("Invalid choice received: %c\n", input[0]);
+			}
 			renderMenu();
 			break;
 		}
