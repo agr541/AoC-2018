@@ -7,10 +7,12 @@
 #include <stdio.h>
 #include <string.h>
 #include "AoC-2022.h"
-#include "DayOne.h"
+
+#include "Days/Day1.h"
+#include "Days/Day2.h"
 using namespace std;
 
-DayOne* selectedDay = NULL;
+Day* selectedDay = NULL;
 
 void renderMenu() {
 	printf("\nAvailable choices\n");
@@ -28,6 +30,7 @@ void renderMenu() {
 	}
 
 	printf("1. Day 1\n");
+	printf("2. Day 2\n");
 
 	printf("C. Clear\n");
 	printf("Q. Quit\n");
@@ -65,7 +68,12 @@ void handleInput() {
 			break;
 		case '1':
 			printf("Selected day %c\n", input[0]);
-			selectedDay = new DayOne();
+			selectedDay = new Day1();
+			renderMenu();
+			break;
+		case '2':
+			printf("Selected day %c\n", input[0]);
+			selectedDay = new Day2();
 			renderMenu();
 			break;
 		case 'C':

@@ -70,6 +70,11 @@
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <CopyLocalDeploymentContent>true</CopyLocalDeploymentContent>
+    <RunCodeAnalysis>false</RunCodeAnalysis>
+    <EnableClangTidyCodeAnalysis>true</EnableClangTidyCodeAnalysis>
+  </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
@@ -104,6 +109,8 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard>stdcpplatest</LanguageStandard>
+      <LanguageStandard_C>stdc17</LanguageStandard_C>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -128,15 +135,31 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="AoC-2022.cpp" />
-    <ClCompile Include="DayOne.cpp" />
+    <ClCompile Include="Days\Day2.cpp" />
+    <ClCompile Include="Days\Day.cpp" />
+    <ClCompile Include="Days\Day1.cpp" />
+    <ClCompile Include="Days\DayTemplate\DayTemplate.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="DayOne.h" />
+    <ClInclude Include="AoC-2022.h" />
+    <ClInclude Include="Days\Day2.h" />
+    <ClInclude Include="Days\Day.h" />
+    <ClInclude Include="Days\Day1.h" />
+    <ClInclude Include="Days\DayTemplate\DayTemplate.h" />
   </ItemGroup>
   <ItemGroup>
-    <Text Include="DayOne-example.txt" />
-    <Text Include="DayOne-input.txt">
+    <Text Include="Resources\Day1\example.txt">
+      <DeploymentContent>true</DeploymentContent>
+    </Text>
+    <Text Include="Resources\Day1\input.txt">
       <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</DeploymentContent>
+      <DeploymentContent>false</DeploymentContent>
+    </Text>
+    <Text Include="Resources\Day2\example.txt">
+      <DeploymentContent>true</DeploymentContent>
+    </Text>
+    <Text Include="Resources\Day2\input.txt">
+      <DeploymentContent>true</DeploymentContent>
     </Text>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

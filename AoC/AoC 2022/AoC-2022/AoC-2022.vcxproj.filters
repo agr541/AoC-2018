@@ -18,17 +18,40 @@
     <ClCompile Include="AoC-2022.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="DayOne.cpp">
+    <ClCompile Include="Days\Day1.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Days\Day.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Days\Day2.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Days\DayTemplate\DayTemplate.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="DayOne.h">
+    <ClInclude Include="Days\Day1.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="AoC-2022.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Days\Day.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Days\Day2.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Days\DayTemplate\DayTemplate.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <Text Include="DayOne-input.txt" />
-    <Text Include="DayOne-example.txt" />
+    <Text Include="Resources\Day1\input.txt" />
+    <Text Include="Resources\Day1\example.txt" />
+    <Text Include="Resources\Day2\input.txt" />
+    <Text Include="Resources\Day2\example.txt" />
   </ItemGroup>
 </Project>
