@@ -1,7 +1,5 @@
-
 #pragma once
-#include "..\Day.h"
-
+#include "Day.h"
 
 #include <stdio.h>
 #include <string>
@@ -9,20 +7,16 @@
 
 using namespace std;
 
-class DayTemplate :
+class Day4 :
 	public Day
 {
 	// Inherited via Day
-
 	virtual void ProcessInputA(ifstream& myfile) override;
 	virtual void ProcessInputB(ifstream& myfile) override;
 
 public:
-	DayTemplate();
+	Day4();
 
-private:
-	string initialInput;
-	string secondaryInput;
-	string input;
 };
 
+vector<string> Split(string input, char delimiter);

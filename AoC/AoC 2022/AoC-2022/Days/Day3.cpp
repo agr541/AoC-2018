@@ -28,7 +28,7 @@ string Day3::GetIntersection(string first, string last) {
 	sort(first.begin(), first.end());
 	sort(last.begin(), last.end());
 
-	string matches = "";
+	string matches;
 	set_intersection(first.begin(), first.end(), last.begin(), last.end(), back_inserter(matches));
 
 	string unique = "";

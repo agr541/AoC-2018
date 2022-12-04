@@ -58,8 +58,8 @@ void Day1::ProcessInputB(ifstream& myfile)
 		}
 	}
 
-	int answer = 0;
-	for (int largestCount : highestCounts)
+	auto answer = 0;
+	for (auto largestCount : highestCounts)
 	{
 		answer += largestCount;
 	}

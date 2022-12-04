@@ -11,10 +11,7 @@ using namespace std;
 Day::Day(string name)
 {
 	_name = name;
-	/*auto currentPath = filesystem::current_path();
-	string sep = currentPath.preferred_separator();
-	string path = currentPath.c_str() + sep + "Resources" + sep + _name;
-	*/
+
 	const std::filesystem::path resources{ "Resources\\" + _name };
 	for (auto& p : std::filesystem::directory_iterator{ resources })
 	{
@@ -47,6 +44,8 @@ void Day::SwitchInput()
 void Day::RunA()
 {
 	string input = GetInput();
+
+	
 	ifstream myfile(input);
 	if (myfile.is_open())
 	{

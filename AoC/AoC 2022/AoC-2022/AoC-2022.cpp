@@ -12,10 +12,11 @@
 #include "Days/Day1.h"
 #include "Days/Day2.h"
 #include "Days/Day3.h"
+#include "Days/Day4.h"
 using namespace std;
 
-vector<Day*> days = { new Day1(), new Day2(), new Day3() };
-Day* selectedDay = NULL;
+vector<Day*> days = { new Day1(), new Day2(), new Day3(), new Day4() };
+Day* selectedDay = days.back();
 
 
 void renderMenu() {
@@ -25,7 +26,7 @@ void renderMenu() {
 		string input = selectedDay->GetInput();
 
 		printf("Selected Day: %s\n", name.c_str());
-		printf("Selected input: %s\n", input.c_str());
+		printf("Selected input: %s\n\n", input.c_str());
 
 		printf("A. RunA\n");
 		printf("B. RunB\n");
@@ -34,19 +35,18 @@ void renderMenu() {
 	}
 
 	int i = 1;
+	printf("\nSelect another day\n");
 	for (Day* day : days) {
 		printf("%i. %s\n", i++, day->GetName().c_str());
 	}
-
-	printf("C. Clear\n");
-	printf("Q. Quit\n");
+	printf("\n\nQ. Quit\n");
 }
 
 void handleInput() {
 	bool done = false;
 	while (!done) {
 
-		printf("Enter choice:");
+		printf("\nEnter choice:");
 		char input[1];
 
 		std::cin.read(input, 1);
@@ -80,11 +80,7 @@ void handleInput() {
 			renderMenu();
 			break;
 		}
-		case 'C': case 'c':
-			selectedDay = NULL;
-			system("cls");
-			renderMenu();
-			break;
+		
 		case 'Q': case 'q':
 			done = true;
 			break;

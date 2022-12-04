@@ -74,6 +74,12 @@
     <CopyLocalDeploymentContent>true</CopyLocalDeploymentContent>
     <RunCodeAnalysis>false</RunCodeAnalysis>
     <EnableClangTidyCodeAnalysis>true</EnableClangTidyCodeAnalysis>
+    <ClangTidyChecks>clang-analyzer-*</ClangTidyChecks>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <RunCodeAnalysis>false</RunCodeAnalysis>
+    <EnableClangTidyCodeAnalysis>true</EnableClangTidyCodeAnalysis>
+    <ClangTidyChecks>clang-analyzer-*</ClangTidyChecks>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -81,6 +87,8 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard>stdcpplatest</LanguageStandard>
+      <LanguageStandard_C>stdc17</LanguageStandard_C>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -139,6 +147,7 @@
     <ClCompile Include="Days\Day.cpp" />
     <ClCompile Include="Days\Day1.cpp" />
     <ClCompile Include="Days\Day3.cpp" />
+    <ClCompile Include="Days\Day4.cpp" />
     <ClCompile Include="Days\DayTemplate\DayTemplate.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -147,6 +156,7 @@
     <ClInclude Include="Days\Day.h" />
     <ClInclude Include="Days\Day1.h" />
     <ClInclude Include="Days\Day3.h" />
+    <ClInclude Include="Days\Day4.h" />
     <ClInclude Include="Days\DayTemplate\DayTemplate.h" />
   </ItemGroup>
   <ItemGroup>
@@ -169,6 +179,8 @@
     <Text Include="Resources\Day 3\input.txt">
       <DeploymentContent>true</DeploymentContent>
     </Text>
+    <Text Include="Resources\Day 4\example.txt" />
+    <Text Include="Resources\Day 4\input.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
