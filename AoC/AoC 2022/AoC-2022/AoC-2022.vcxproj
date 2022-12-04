@@ -160,6 +160,7 @@
     <ClInclude Include="Days\DayTemplate\DayTemplate.h" />
   </ItemGroup>
   <ItemGroup>
+    <Text Include="CMakeLists.txt" />
     <Text Include="Resources\Day 1\example.txt">
       <DeploymentContent>true</DeploymentContent>
     </Text>
@@ -181,6 +182,9 @@
     </Text>
     <Text Include="Resources\Day 4\example.txt" />
     <Text Include="Resources\Day 4\input.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="CMakePresets.json" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -69,5 +69,9 @@
     <Text Include="Resources\Day 3\input.txt" />
     <Text Include="Resources\Day 4\example.txt" />
     <Text Include="Resources\Day 4\input.txt" />
+    <Text Include="CMakeLists.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="CMakePresets.json" />
   </ItemGroup>
 </Project>
