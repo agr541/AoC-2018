@@ -143,21 +143,29 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="AoC-2022.cpp" />
+    <ClCompile Include="Days\Day5.cpp" />
     <ClCompile Include="Days\Day2.cpp" />
     <ClCompile Include="Days\Day.cpp" />
     <ClCompile Include="Days\Day1.cpp" />
     <ClCompile Include="Days\Day3.cpp" />
     <ClCompile Include="Days\Day4.cpp" />
-    <ClCompile Include="Days\DayTemplate\DayTemplate.cpp" />
+    <ClCompile Include="Days\Day6.cpp" />
+    <ClCompile Include="Days\Day7.cpp" />
+    <ClCompile Include="Days\Day8.cpp" />
+    <ClCompile Include="Days\Day9.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AoC-2022.h" />
+    <ClInclude Include="Days\Day5.h" />
     <ClInclude Include="Days\Day2.h" />
     <ClInclude Include="Days\Day.h" />
     <ClInclude Include="Days\Day1.h" />
     <ClInclude Include="Days\Day3.h" />
     <ClInclude Include="Days\Day4.h" />
-    <ClInclude Include="Days\DayTemplate\DayTemplate.h" />
+    <ClInclude Include="Days\Day6.h" />
+    <ClInclude Include="Days\Day7.h" />
+    <ClInclude Include="Days\Day8.h" />
+    <ClInclude Include="Days\Day9.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="CMakeLists.txt" />
@@ -166,7 +174,7 @@
     </Text>
     <Text Include="Resources\Day 1\input.txt">
       <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</DeploymentContent>
-      <DeploymentContent>false</DeploymentContent>
+      <DeploymentContent>true</DeploymentContent>
     </Text>
     <Text Include="Resources\Day 2\example.txt">
       <DeploymentContent>true</DeploymentContent>
@@ -182,6 +190,19 @@
     </Text>
     <Text Include="Resources\Day 4\example.txt" />
     <Text Include="Resources\Day 4\input.txt" />
+    <Text Include="Resources\Day 5\example.txt" />
+    <Text Include="Resources\Day 5\input.txt" />
+    <Text Include="Resources\Day 6\example.txt" />
+    <Text Include="Resources\Day 6\input.txt" />
+    <Text Include="Resources\Day 7\example.txt" />
+    <Text Include="Resources\Day 7\input.txt" />
+    <Text Include="Resources\Day 8\example.txt" />
+    <Text Include="Resources\Day 8\input.txt" />
+    <Text Include="Resources\Day 9\example.txt" />
+    <Text Include="Resources\Day 9\exampleB.txt" />
+    <Text Include="Resources\Day 9\input.txt" />
+    <Text Include="Resources\Day Template\example.txt" />
+    <Text Include="Resources\Day Template\input.txt" />
   </ItemGroup>
   <ItemGroup>
     <None Include="CMakePresets.json" />

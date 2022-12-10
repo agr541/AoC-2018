@@ -29,14 +29,19 @@ string Day::GetName()
 
 string Day::GetInput()
 {
-	return _inputs.at(_inputIndex);
+
+	string path = _inputs[_inputIndex];
+	filesystem::path p(path);
+
+	inputFileSize = filesystem::file_size(p);
+	return path;
 
 }
 
 void Day::SwitchInput()
 {
 	_inputIndex++;
-	if (_inputIndex > _inputs.size()) {
+	if (_inputIndex >= _inputs.size()) {
 		_inputIndex = 0;
 	}
 }
@@ -58,6 +63,7 @@ void Day::RunB()
 {
 	string input = GetInput();
 	ifstream myfile(input);
+	
 	if (myfile.is_open())
 	{
 		ProcessInputB(myfile);

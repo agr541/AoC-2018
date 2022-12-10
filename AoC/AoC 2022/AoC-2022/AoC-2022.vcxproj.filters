@@ -30,10 +30,22 @@
     <ClCompile Include="Days\Day3.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Days\DayTemplate\DayTemplate.cpp">
+    <ClCompile Include="Days\Day4.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Days\Day4.cpp">
+    <ClCompile Include="Days\Day5.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Days\Day6.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Days\Day7.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Days\Day8.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Days\Day9.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -53,10 +65,22 @@
     <ClInclude Include="Days\Day3.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Days\DayTemplate\DayTemplate.h">
+    <ClInclude Include="Days\Day4.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Days\Day4.h">
+    <ClInclude Include="Days\Day5.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Days\Day6.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Days\Day7.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Days\Day8.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Days\Day9.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -70,6 +94,19 @@
     <Text Include="Resources\Day 4\example.txt" />
     <Text Include="Resources\Day 4\input.txt" />
     <Text Include="CMakeLists.txt" />
+    <Text Include="Resources\Day 5\example.txt" />
+    <Text Include="Resources\Day 5\input.txt" />
+    <Text Include="Resources\Day 6\example.txt" />
+    <Text Include="Resources\Day 6\input.txt" />
+    <Text Include="Resources\Day 7\example.txt" />
+    <Text Include="Resources\Day 7\input.txt" />
+    <Text Include="Resources\Day 8\example.txt" />
+    <Text Include="Resources\Day 8\input.txt" />
+    <Text Include="Resources\Day Template\example.txt" />
+    <Text Include="Resources\Day Template\input.txt" />
+    <Text Include="Resources\Day 9\example.txt" />
+    <Text Include="Resources\Day 9\input.txt" />
+    <Text Include="Resources\Day 9\exampleB.txt" />
   </ItemGroup>
   <ItemGroup>
     <None Include="CMakePresets.json" />

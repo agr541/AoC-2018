@@ -13,9 +13,14 @@
 #include "Days/Day2.h"
 #include "Days/Day3.h"
 #include "Days/Day4.h"
+#include "Days/Day5.h"
+#include "Days/Day6.h"
+#include "Days/Day7.h"
+#include "Days/Day8.h"
+#include "Days/Day9.h"
 using namespace std;
 
-vector<Day*> days = { new Day1(), new Day2(), new Day3(), new Day4() };
+vector<Day*> days = { new Day1(), new Day2(), new Day3(), new Day4(), new Day5(), new Day6(), new Day7() , new Day8(), new Day9()};
 Day* selectedDay = days.back();
 
 

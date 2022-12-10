@@ -13,6 +13,7 @@ protected:
 	string _name;
 	size_t _inputIndex = 0;
 	vector<string> _inputs;
+	uintmax_t inputFileSize = 0;
 
 public:
 	Day(string name);
