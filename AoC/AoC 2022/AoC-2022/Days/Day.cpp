@@ -20,7 +20,9 @@ Day::Day(string name)
 			_inputs.push_back(p.path().string());
 		}
 	}
+	
 }
+
 
 string Day::GetName()
 {

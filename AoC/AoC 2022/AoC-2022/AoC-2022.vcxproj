@@ -143,6 +143,8 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="AoC-2022.cpp" />
+    <ClCompile Include="Days\Day10.cpp" />
+    <ClCompile Include="Days\Day11.cpp" />
     <ClCompile Include="Days\Day5.cpp" />
     <ClCompile Include="Days\Day2.cpp" />
     <ClCompile Include="Days\Day.cpp" />
@@ -156,6 +158,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AoC-2022.h" />
+    <ClInclude Include="Days\Day10.h" />
+    <ClInclude Include="Days\Day11.h" />
     <ClInclude Include="Days\Day5.h" />
     <ClInclude Include="Days\Day2.h" />
     <ClInclude Include="Days\Day.h" />
@@ -169,6 +173,9 @@
   </ItemGroup>
   <ItemGroup>
     <Text Include="CMakeLists.txt" />
+    <Text Include="Resources\Day 10\example.txt" />
+    <Text Include="Resources\Day 10\example2.txt" />
+    <Text Include="Resources\Day 10\input.txt" />
     <Text Include="Resources\Day 1\example.txt">
       <DeploymentContent>true</DeploymentContent>
     </Text>

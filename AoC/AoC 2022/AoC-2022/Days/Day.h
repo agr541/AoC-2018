@@ -7,6 +7,7 @@
 
 using namespace std;
 
+
 class Day
 {
 protected:
@@ -18,6 +19,7 @@ protected:
 public:
 	Day(string name);
 
+	
 	string GetName();
 	string GetInput();
 
@@ -27,4 +29,3 @@ public:
 	void RunB();
 	virtual void ProcessInputB(ifstream& myfile) = 0;
 };
-

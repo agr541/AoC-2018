@@ -48,6 +48,12 @@
     <ClCompile Include="Days\Day9.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Days\Day10.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Days\Day11.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Days\Day1.h">
@@ -83,6 +89,12 @@
     <ClInclude Include="Days\Day9.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Days\Day10.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Days\Day11.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Text Include="Resources\Day 1\input.txt" />
@@ -107,6 +119,9 @@
     <Text Include="Resources\Day 9\example.txt" />
     <Text Include="Resources\Day 9\input.txt" />
     <Text Include="Resources\Day 9\exampleB.txt" />
+    <Text Include="Resources\Day 10\example.txt" />
+    <Text Include="Resources\Day 10\input.txt" />
+    <Text Include="Resources\Day 10\example2.txt" />
   </ItemGroup>
   <ItemGroup>
     <None Include="CMakePresets.json" />

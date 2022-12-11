@@ -7,6 +7,7 @@
 #include <vector>
 #include <stdio.h>
 #include <string.h>
+
 #include "AoC-2022.h"
 
 #include "Days/Day1.h"
@@ -18,9 +19,12 @@
 #include "Days/Day7.h"
 #include "Days/Day8.h"
 #include "Days/Day9.h"
+#include "Days/Day10.h"
+#include "Days/Day11.h"
 using namespace std;
 
-vector<Day*> days = { new Day1(), new Day2(), new Day3(), new Day4(), new Day5(), new Day6(), new Day7() , new Day8(), new Day9()};
+vector<Day*> days = { new Day1(), new Day2(), new Day3(), new Day4(), new Day5(),new Day6(), new Day7(), new Day8(), new Day9(), new Day10(), new Day11() };
+
 Day* selectedDay = days.back();
 
 
@@ -52,9 +56,9 @@ void handleInput() {
 	while (!done) {
 
 		printf("\nEnter choice:");
-		char input[1];
+		string input;
 
-		std::cin.read(input, 1);
+		std::cin >> input;
 		std::cin.ignore();
 
 		switch (input[0]) {
@@ -75,7 +79,7 @@ void handleInput() {
 			renderMenu();
 			break;
 		case '0': case '1': case '2': case '3': case '4': case '5': case '6': case '7': case '8': case '9': {
-			int index = (int)input[0] - 49;
+			int index = stoi(input) - 1;
 			if (days.size() > index && index > -1) {
 				selectedDay = days[index];
 			}
@@ -85,7 +89,7 @@ void handleInput() {
 			renderMenu();
 			break;
 		}
-		
+
 		case 'Q': case 'q':
 			done = true;
 			break;
