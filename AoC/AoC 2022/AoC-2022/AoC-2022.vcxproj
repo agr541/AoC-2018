@@ -103,6 +103,8 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard>stdcpplatest</LanguageStandard>
+      <LanguageStandard_C>stdc17</LanguageStandard_C>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -133,6 +135,8 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard>stdcpplatest</LanguageStandard>
+      <LanguageStandard_C>stdc17</LanguageStandard_C>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -176,6 +180,8 @@
     <Text Include="Resources\Day 10\example.txt" />
     <Text Include="Resources\Day 10\example2.txt" />
     <Text Include="Resources\Day 10\input.txt" />
+    <Text Include="Resources\Day 11\example.txt" />
+    <Text Include="Resources\Day 11\input.txt" />
     <Text Include="Resources\Day 1\example.txt">
       <DeploymentContent>true</DeploymentContent>
     </Text>
@@ -212,9 +218,9 @@
     <Text Include="Resources\Day Template\input.txt" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\..\.clang-tidy" />
     <None Include="CMakePresets.json" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
-  <ImportGroup Label="ExtensionTargets">
-  </ImportGroup>
+  <ImportGroup Label="ExtensionTargets" />
 </Project>

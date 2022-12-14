@@ -27,10 +27,10 @@ void Day8::ProcessInputA(ifstream& myfile)
 		matrix.push_back(row);
 	}
 
-	int answer = matrix.size() * 2 + (matrix[0].size()-2) * 2;
+	size_t answer = matrix.size() * 2 + (matrix[0].size()-2) * 2;
 	
 	for (int y = 1; y < matrix.size() - 1; y++) {
-		auto row = matrix[y];
+		auto& row = matrix[y];
 		for (int x = 1; x < row.size() - 1; x++) {
 			int h = row[x];
 
@@ -78,7 +78,7 @@ void Day8::ProcessInputA(ifstream& myfile)
 
 
 
-	printf("Answer: %i", answer);
+	printf("Answer: %zi", answer);
 
 
 }
@@ -106,7 +106,7 @@ void Day8::ProcessInputB(ifstream& myfile)
 	int answer = 0;
 
 	for (int y = 0; y < matrix.size(); y++) {
-		auto row = matrix[y];
+		auto& row = matrix[y];
 		for (int x = 0; x < row.size() ; x++) {
 			int h = row[x];
 
@@ -146,10 +146,6 @@ void Day8::ProcessInputB(ifstream& myfile)
 			int score = topDistance * leftDistance * rightDistance * bottomDistance;
 			if (answer < score) {
 				answer = score;
-			}
-			
-			if (x == 2 && y == 3) {
-				answer = answer;
 			}
 		}
 

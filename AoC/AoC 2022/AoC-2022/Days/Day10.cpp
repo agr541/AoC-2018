@@ -1,5 +1,5 @@
 #include "Day10.h"
-
+using namespace std;;
 Day10::Day10() : Day("Day 10")
 {
 

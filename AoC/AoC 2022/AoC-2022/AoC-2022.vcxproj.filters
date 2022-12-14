@@ -122,8 +122,11 @@
     <Text Include="Resources\Day 10\example.txt" />
     <Text Include="Resources\Day 10\input.txt" />
     <Text Include="Resources\Day 10\example2.txt" />
+    <Text Include="Resources\Day 11\example.txt" />
+    <Text Include="Resources\Day 11\input.txt" />
   </ItemGroup>
   <ItemGroup>
     <None Include="CMakePresets.json" />
+    <None Include="..\..\.clang-tidy" />
   </ItemGroup>
 </Project>
