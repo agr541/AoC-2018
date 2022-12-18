@@ -149,6 +149,8 @@
     <ClCompile Include="AoC-2022.cpp" />
     <ClCompile Include="Days\Day10.cpp" />
     <ClCompile Include="Days\Day11.cpp" />
+    <ClCompile Include="Days\Day12.cpp" />
+    <ClCompile Include="Days\Day13.cpp" />
     <ClCompile Include="Days\Day5.cpp" />
     <ClCompile Include="Days\Day2.cpp" />
     <ClCompile Include="Days\Day.cpp" />
@@ -164,6 +166,8 @@
     <ClInclude Include="AoC-2022.h" />
     <ClInclude Include="Days\Day10.h" />
     <ClInclude Include="Days\Day11.h" />
+    <ClInclude Include="Days\Day12.h" />
+    <ClInclude Include="Days\Day13.h" />
     <ClInclude Include="Days\Day5.h" />
     <ClInclude Include="Days\Day2.h" />
     <ClInclude Include="Days\Day.h" />
