@@ -4,6 +4,8 @@
 #include <iostream>
 #include <conio.h>
 
+
+
 Day14::Day14() :Day("Day 14")
 {
 }
@@ -13,6 +15,10 @@ struct pos {
 	int y;
 
 	auto operator<=>(const pos&) const = default;
+
+	auto operator<(const pos& p) {
+		return y < p.y && x < p.x;
+	}
 };
 
 void setY(string& val, pos& p, vector<pos>& points) {
@@ -92,12 +98,15 @@ vector<pos> getInbetweens(vector<vector<pos>> paths) {
 	return inbetweens;
 }
 
-bool overlaps(pos p, vector<pos> coords) {
+bool overlaps(pos& p, vector<pos>& coords) {
+	//return binary_search(coords.begin(), coords.end(), p);
+	//return coords.find(p) != coords.end();
+	//return coords.contains(p);
 	return ((find(coords.begin(), coords.end(), p)) != coords.end());
 }
 
 void drawGrid(vector<vector<pos>> paths, int& answer) {
-	
+
 	pos sandSource = pos();
 	sandSource.x = 500;
 	sandSource.y = 0;
@@ -148,11 +157,10 @@ void drawGrid(vector<vector<pos>> paths, int& answer) {
 	}
 
 	vector<pos> inbetweens = getInbetweens(paths);
-	
+
 	vector<pos> sand = vector<pos>();
-
-
 	vector<pos> rocks = vector<pos>();
+	
 	for (auto y = minMaxY.first; y <= minMaxY.second; y++) {
 		for (auto x = minMaxX.first; x <= minMaxX.second; x++) {
 
@@ -177,13 +185,14 @@ void drawGrid(vector<vector<pos>> paths, int& answer) {
 				pos prock = pos();
 				prock.x = x;
 				prock.y = y;
+				
 				rocks.push_back(prock);
 			}
 		}
 	}
-	
+
 	int i = 0;
-	while(answer==0){
+	while (answer == 0) {
 		i++;
 		pos newSand = pos();
 		newSand.x = sandSource.x;
@@ -191,7 +200,7 @@ void drawGrid(vector<vector<pos>> paths, int& answer) {
 
 		while (!overlaps(newSand, rocks) &&
 			!overlaps(newSand, sand)) {
-			
+
 			newSand.y++;
 			if (overlaps(newSand, sand) ||
 				overlaps(newSand, rocks)) {
@@ -209,15 +218,15 @@ void drawGrid(vector<vector<pos>> paths, int& answer) {
 			}
 
 			if (newSand.y >= minMaxY.second) {
-				answer = i-1;
+				answer = i - 1;
 				break;
 			}
 
 		};
-		
+
 		sand.push_back(newSand);
 
-		if (i < 25 || answer!=0) {
+		if (i < 25 || answer != 0) {
 			system("CLS");
 
 			vector<string> xCoordsCopy = vector<string>();
@@ -280,9 +289,214 @@ void drawGrid(vector<vector<pos>> paths, int& answer) {
 		}
 
 	}
-	
+
 }
 
+void drawGridWithBottom(vector<vector<pos>> paths, int& answer) {
+	system("cls");
+	
+	pos sandSource = pos();
+	sandSource.x = 500;
+	sandSource.y = 0;
+	printf("getting min/max...\r\n");
+
+	auto minMaxX = getminmax(paths, [](pos a) {
+		return a.x;
+		});
+	auto minMaxY = getminmax(paths, [](pos a) {
+		return a.y;
+		});
+
+	minMaxX.first = min(sandSource.x, minMaxX.first);
+	minMaxX.second = max(sandSource.x, minMaxX.second);
+
+	minMaxY.first = min(sandSource.y, minMaxY.first);
+	minMaxY.second = max(sandSource.y, minMaxY.second);
+
+	int bottom = minMaxY.second + 2;
+
+	vector<string> xCoords = vector<string>();
+	for (auto x = minMaxX.first; x <= minMaxX.second; x++)
+	{
+		string sX = to_string(x);
+		xCoords.push_back(sX);
+	}
+	auto minMaxXLength = getminmax(xCoords, [](string a) {
+		return a.length();
+		});
+
+	for (auto& xc : xCoords) {
+		while (xc.length() < minMaxXLength.second) {
+			xc = " " + xc;
+		}
+	}
+
+	vector<string> yCoords = vector<string>();
+	for (auto y = minMaxY.first; y <= minMaxX.second; y++)
+	{
+		string sY = to_string(y);
+		yCoords.push_back(sY);
+	}
+	auto minMaxYLength = getminmax(yCoords, [](string a) {
+		return a.length();
+		});
+	for (auto& yc : yCoords) {
+		while (yc.length() < minMaxYLength.second) {
+			yc = " " + yc;
+		}
+	}
+
+	vector<pos> inbetweens = getInbetweens(paths);
+	vector<pos> sand = vector<pos>();
+
+	printf("adding rocks...\r\n");
+	vector<pos> rocks = vector<pos>();
+	for (auto y = minMaxY.first; y <= minMaxY.second; y++) {
+		for (auto x = minMaxX.first; x <= minMaxX.second; x++) {
+
+			bool rock = false;
+			for (auto p : paths) {
+				if (!rock) {
+					for (auto pnt : p) {
+						if (pnt.y == bottom) {
+							rock = true;
+							break;
+						}
+						if (pnt.x == x && pnt.y == y) {
+							rock = true;
+							break;
+						}
+					}
+					for (auto pnt : inbetweens) {
+						if (pnt.x == x && pnt.y == y) {
+							rock = true;
+							break;
+						}
+					}
+				}
+			}
+			if (rock) {
+				pos prock = pos();
+				prock.x = x;
+				prock.y = y;
+				rocks.push_back(prock);
+			}
+		}
+	}
+	
+	sort(rocks.begin(), rocks.end());
+
+	int i = 0;
+	while (answer == 0) {
+		i++;
+		pos newSand = pos();
+		newSand.x = sandSource.x;
+		newSand.y = sandSource.y;
+		bool newSandStart = true;
+
+		while (!overlaps(newSand, rocks) &&
+			!overlaps(newSand, sand) &&
+			(newSandStart || newSand != sandSource)) {
+			newSandStart = false;
+			newSand.y++;
+			if (overlaps(newSand, sand) ||
+				overlaps(newSand, rocks) ||
+				newSand.y == bottom) {
+				newSand.x--;
+				if (overlaps(newSand, sand) ||
+					overlaps(newSand, rocks) ||
+					newSand.y == bottom) {
+					newSand.x += 2;
+					if (overlaps(newSand, sand) ||
+						overlaps(newSand, rocks) ||
+						newSand.y == bottom) {
+						newSand.y--;
+						newSand.x--;
+						break;
+					}
+				}
+			}
+
+
+		};
+
+		if (newSand == sandSource) {
+			answer = i;
+			return;
+		}
+		sand.push_back(newSand);
+
+		string buffer = "";
+		if (i < 100 || answer != 0 || i % 100 == 0) {
+
+
+			vector<string> xCoordsCopy = vector<string>();
+			for (auto xcc : xCoords) {
+				xCoordsCopy.push_back(xcc);
+			}
+
+
+			for (auto x = 0; x < minMaxXLength.second; x++)
+			{
+				for (int mmy = 0; mmy < minMaxXLength.second; mmy++) {
+					buffer += " ";
+				}
+
+				for (auto& xc : xCoordsCopy) {
+					if (!xc.empty()) {
+						buffer += _Printf_format_string_("%s", xc.substr(0, 1).c_str());
+						xc = xc.substr(1);
+					}
+					else {
+						buffer += " ";
+					}
+				}
+				buffer += "\r\n";
+			}
+
+			for (auto y = minMaxY.first; y <= minMaxY.second; y++) {
+				auto yss = to_string(y).length();
+				for (int mmy = yss; mmy < minMaxXLength.second - 1; mmy++) {
+					buffer += " ";
+				}
+
+				buffer += to_string(y) + " ";// _Printf_format_string_("%i ", y);
+
+				for (auto x = minMaxX.first; x <= minMaxX.second; x++) {
+
+					pos p = pos();
+					p.x = x;
+					p.y = y;
+
+					if (sandSource == p) {
+						buffer += "+";
+					}
+					else if (overlaps(p, rocks)) {
+						buffer += "#";
+					}
+					else if (overlaps(p, sand)) {
+						buffer += "o";
+					}
+					else {
+						buffer += ".";
+					}
+
+
+
+				}
+
+				buffer += "\r\n";
+			}
+			
+			system("cls");
+			cout << buffer;
+			
+
+		}
+
+	}
+
+}
 void Day14::ProcessInputA(ifstream& myfile)
 {
 	int answer = 0;
@@ -323,9 +537,33 @@ void Day14::ProcessInputB(ifstream& myfile)
 {
 	int answer = 0;
 	string line;
+	vector<pos> points = vector<pos>();
+	vector<vector<pos>> paths = vector<vector<pos>>();
+	printf("reading file..\r\n");
 	while (getline(myfile, line)) {
+		string val = "";
+		pos p = pos();
+		for (char c : line)
+		{
+			if (c == ',') {
+				setX(val, p);
+			}
+			else if (c == ' ' && !val.empty()) {
+				setY(val, p, points);
+			}
+			else if (c == '-' || c == '>') {
 
+			}
+			else {
+				val.push_back(c);
+			}
+		}
+		setY(val, p, points);
+		paths.push_back(points);
+		points = vector<pos>();
 	}
+
+	drawGridWithBottom(paths, answer);
 
 	printf("Answer: %i", answer);
 }
