@@ -190,6 +190,14 @@
     <Text Include="Resources\Day 10\input.txt" />
     <Text Include="Resources\Day 11\example.txt" />
     <Text Include="Resources\Day 11\input.txt" />
+    <Text Include="Resources\Day 12\example.txt" />
+    <Text Include="Resources\Day 12\input.txt" />
+    <Text Include="Resources\Day 13\example.txt" />
+    <Text Include="Resources\Day 13\input.txt" />
+    <Text Include="Resources\Day 14\example.txt" />
+    <Text Include="Resources\Day 14\input.txt" />
+    <Text Include="Resources\Day 15\example.txt" />
+    <Text Include="Resources\Day 15\input.txt" />
     <Text Include="Resources\Day 1\example.txt">
       <DeploymentContent>true</DeploymentContent>
     </Text>
