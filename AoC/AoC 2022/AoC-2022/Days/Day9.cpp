@@ -16,8 +16,8 @@ void Day9::ProcessInputA(ifstream& myfile)
 
 	int headX = 0;
 	int headY = 0;
-	vector<pos> tailPositions = vector<pos>();
-	pos p = pos();
+	vector<sensor> tailPositions = vector<sensor>();
+	sensor p = sensor();
 	p.x = headX;
 	p.y = headY;
 	tailPositions.push_back(p);
@@ -61,7 +61,7 @@ void Day9::ProcessInputA(ifstream& myfile)
 				tailX += (xDif < 0) ? 1 : -1;
 				tailY += (yDif < 0) ? 1 : -1;
 			}
-			pos p = pos();
+			sensor p = sensor();
 			p.x = tailX;
 			p.y = tailY;
 			tailPositions.push_back(p);
@@ -81,7 +81,7 @@ void Day9::ProcessInputA(ifstream& myfile)
 	}
 }
 
-void Day9::DrawGrid(vector<pos> rope, std::vector<std::string>& grids) {
+void Day9::DrawGrid(vector<sensor> rope, std::vector<std::string>& grids) {
 
 	int width = 26;
 	int height = 21;
@@ -97,7 +97,7 @@ void Day9::DrawGrid(vector<pos> rope, std::vector<std::string>& grids) {
 	
 	string grid = emptyGrid;
 	for (int i = 0; i < rope.size(); i++) {
-		pos p = rope[i];
+		sensor p = rope[i];
 		char marker = 'H';
 		if (i > 0) {
 			marker = (char)(i + 48);
@@ -130,11 +130,11 @@ void Day9::DrawGrid(int tailX, int tailY, int headX, int headY, std::vector<std:
 void Day9::ProcessInputB(ifstream& myfile)
 {
 	string line;
-	vector<pos> rope = vector<pos>();
+	vector<sensor> rope = vector<sensor>();
 
-	vector<pos> positionHistory = vector<pos>();
+	vector<sensor> positionHistory = vector<sensor>();
 	for (int i = 0; i < 10; i++) {
-		pos knot = pos();
+		sensor knot = sensor();
 		knot.x = 11;
 		knot.y = 5;
 		rope.push_back(knot);
@@ -152,7 +152,7 @@ void Day9::ProcessInputB(ifstream& myfile)
 		int distance = stoi(distanceString);
 		for (int d = 0; d < distance; d++) {
 
-			pos head = rope.front();
+			sensor head = rope.front();
 			switch (line[0]) {
 			case 'R':
 				head.x++;
@@ -172,7 +172,7 @@ void Day9::ProcessInputB(ifstream& myfile)
 			rope[0] = head;
 			for (int i = 1; i < rope.size(); i++) {
 
-				pos p = rope[i];
+				sensor p = rope[i];
 				int xDif = p.x - rope[i - 1].x;
 				int yDif = p.y - rope[i - 1].y;
 				if (((abs(xDif) == 2) && yDif == 0) || ((abs(yDif) == 2) && xDif == 0)) {

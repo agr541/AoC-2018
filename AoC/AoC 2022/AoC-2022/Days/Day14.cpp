@@ -10,30 +10,30 @@ Day14::Day14() :Day("Day 14")
 {
 }
 
-struct pos {
+struct sensor {
 	int x;
 	int y;
 
-	auto operator<=>(const pos&) const = default;
+	auto operator<=>(const sensor&) const = default;
 
-	auto operator<(const pos& p) {
+	auto operator<(const sensor& p) {
 		return y < p.y && x < p.x;
 	}
 };
 
-void setY(string& val, pos& p, vector<pos>& points) {
+void setY(string& val, sensor& p, vector<sensor>& points) {
 	p.y = stoi(val);
 	val = "";
 	points.push_back(p);
-	p = pos();
+	p = sensor();
 }
 
-void setX(string& val, pos& p) {
+void setX(string& val, sensor& p) {
 	p.x = stoi(val);
 	val = "";
 }
 
-pair<int, int> getminmax(vector<vector<pos>> items, function<int(pos)> f) {
+pair<int, int> getminmax(vector<vector<sensor>> items, function<int(sensor)> f) {
 	vector<int> trans = vector<int>();
 	for (auto& item : items) {
 		auto& transItem = *transform(item.begin(), item.end(), back_inserter(trans), f);
@@ -60,13 +60,13 @@ pair<int, int> getminmax(vector<string> items, function<int(string)> f) {
 	return make_pair(min, max);
 }
 
-vector<pos> getInbetweens(vector<vector<pos>> paths) {
-	vector<pos> inbetweens = vector<pos>();
+vector<sensor> getInbetweens(vector<vector<sensor>> paths) {
+	vector<sensor> inbetweens = vector<sensor>();
 	for (auto p : paths) {
 
 		for (int pntIndex = 0; pntIndex < p.size() - 1; pntIndex++) {
-			pos posCurrent = p[pntIndex];
-			pos posNext = p[pntIndex + 1];
+			sensor posCurrent = p[pntIndex];
+			sensor posNext = p[pntIndex + 1];
 
 
 			if (posCurrent.x == posNext.x) {
@@ -74,7 +74,7 @@ vector<pos> getInbetweens(vector<vector<pos>> paths) {
 				auto smallestY = min(posCurrent.y, posNext.y);
 
 				for (int ibY = smallestY + 1; ibY <= biggestY; ibY++) {
-					pos inbetween = pos();
+					sensor inbetween = sensor();
 					inbetween.x = posCurrent.x;
 					inbetween.y = ibY;
 					inbetweens.push_back(inbetween);
@@ -87,7 +87,7 @@ vector<pos> getInbetweens(vector<vector<pos>> paths) {
 				auto smallestX = min(posCurrent.x, posNext.x);
 
 				for (int ibX = smallestX + 1; ibX <= biggestX; ibX++) {
-					pos inbetween = pos();
+					sensor inbetween = sensor();
 					inbetween.y = posCurrent.y;
 					inbetween.x = ibX;
 					inbetweens.push_back(inbetween);
@@ -98,23 +98,23 @@ vector<pos> getInbetweens(vector<vector<pos>> paths) {
 	return inbetweens;
 }
 
-bool overlaps(pos& p, vector<pos>& coords) {
+bool overlaps(sensor& p, vector<sensor>& coords) {
 	//return binary_search(coords.begin(), coords.end(), p);
 	//return coords.find(p) != coords.end();
 	//return coords.contains(p);
 	return ((find(coords.begin(), coords.end(), p)) != coords.end());
 }
 
-void drawGrid(vector<vector<pos>> paths, int& answer) {
+void drawGrid(vector<vector<sensor>> paths, int& answer) {
 
-	pos sandSource = pos();
+	sensor sandSource = sensor();
 	sandSource.x = 500;
 	sandSource.y = 0;
 
-	auto minMaxX = getminmax(paths, [](pos a) {
+	auto minMaxX = getminmax(paths, [](sensor a) {
 		return a.x;
 		});
-	auto minMaxY = getminmax(paths, [](pos a) {
+	auto minMaxY = getminmax(paths, [](sensor a) {
 		return a.y;
 		});
 
@@ -156,10 +156,10 @@ void drawGrid(vector<vector<pos>> paths, int& answer) {
 		}
 	}
 
-	vector<pos> inbetweens = getInbetweens(paths);
+	vector<sensor> inbetweens = getInbetweens(paths);
 
-	vector<pos> sand = vector<pos>();
-	vector<pos> rocks = vector<pos>();
+	vector<sensor> sand = vector<sensor>();
+	vector<sensor> rocks = vector<sensor>();
 	
 	for (auto y = minMaxY.first; y <= minMaxY.second; y++) {
 		for (auto x = minMaxX.first; x <= minMaxX.second; x++) {
@@ -182,7 +182,7 @@ void drawGrid(vector<vector<pos>> paths, int& answer) {
 				}
 			}
 			if (rock) {
-				pos prock = pos();
+				sensor prock = sensor();
 				prock.x = x;
 				prock.y = y;
 				
@@ -194,7 +194,7 @@ void drawGrid(vector<vector<pos>> paths, int& answer) {
 	int i = 0;
 	while (answer == 0) {
 		i++;
-		pos newSand = pos();
+		sensor newSand = sensor();
 		newSand.x = sandSource.x;
 		newSand.y = sandSource.y;
 
@@ -263,7 +263,7 @@ void drawGrid(vector<vector<pos>> paths, int& answer) {
 
 				for (auto x = minMaxX.first; x <= minMaxX.second; x++) {
 
-					pos p = pos();
+					sensor p = sensor();
 					p.x = x;
 					p.y = y;
 
@@ -292,18 +292,18 @@ void drawGrid(vector<vector<pos>> paths, int& answer) {
 
 }
 
-void drawGridWithBottom(vector<vector<pos>> paths, int& answer) {
+void drawGridWithBottom(vector<vector<sensor>> paths, int& answer) {
 	system("cls");
 	
-	pos sandSource = pos();
+	sensor sandSource = sensor();
 	sandSource.x = 500;
 	sandSource.y = 0;
 	printf("getting min/max...\r\n");
 
-	auto minMaxX = getminmax(paths, [](pos a) {
+	auto minMaxX = getminmax(paths, [](sensor a) {
 		return a.x;
 		});
-	auto minMaxY = getminmax(paths, [](pos a) {
+	auto minMaxY = getminmax(paths, [](sensor a) {
 		return a.y;
 		});
 
@@ -346,11 +346,11 @@ void drawGridWithBottom(vector<vector<pos>> paths, int& answer) {
 		}
 	}
 
-	vector<pos> inbetweens = getInbetweens(paths);
-	vector<pos> sand = vector<pos>();
+	vector<sensor> inbetweens = getInbetweens(paths);
+	vector<sensor> sand = vector<sensor>();
 
 	printf("adding rocks...\r\n");
-	vector<pos> rocks = vector<pos>();
+	vector<sensor> rocks = vector<sensor>();
 	for (auto y = minMaxY.first; y <= minMaxY.second; y++) {
 		for (auto x = minMaxX.first; x <= minMaxX.second; x++) {
 
@@ -376,7 +376,7 @@ void drawGridWithBottom(vector<vector<pos>> paths, int& answer) {
 				}
 			}
 			if (rock) {
-				pos prock = pos();
+				sensor prock = sensor();
 				prock.x = x;
 				prock.y = y;
 				rocks.push_back(prock);
@@ -389,7 +389,7 @@ void drawGridWithBottom(vector<vector<pos>> paths, int& answer) {
 	int i = 0;
 	while (answer == 0) {
 		i++;
-		pos newSand = pos();
+		sensor newSand = sensor();
 		newSand.x = sandSource.x;
 		newSand.y = sandSource.y;
 		bool newSandStart = true;
@@ -464,7 +464,7 @@ void drawGridWithBottom(vector<vector<pos>> paths, int& answer) {
 
 				for (auto x = minMaxX.first; x <= minMaxX.second; x++) {
 
-					pos p = pos();
+					sensor p = sensor();
 					p.x = x;
 					p.y = y;
 
@@ -501,11 +501,11 @@ void Day14::ProcessInputA(ifstream& myfile)
 {
 	int answer = 0;
 	string line;
-	vector<pos> points = vector<pos>();
-	vector<vector<pos>> paths = vector<vector<pos>>();
+	vector<sensor> points = vector<sensor>();
+	vector<vector<sensor>> paths = vector<vector<sensor>>();
 	while (getline(myfile, line)) {
 		string val = "";
-		pos p = pos();
+		sensor p = sensor();
 		for (char c : line)
 		{
 			if (c == ',') {
@@ -523,7 +523,7 @@ void Day14::ProcessInputA(ifstream& myfile)
 		}
 		setY(val, p, points);
 		paths.push_back(points);
-		points = vector<pos>();
+		points = vector<sensor>();
 	}
 
 	drawGrid(paths, answer);
@@ -537,12 +537,12 @@ void Day14::ProcessInputB(ifstream& myfile)
 {
 	int answer = 0;
 	string line;
-	vector<pos> points = vector<pos>();
-	vector<vector<pos>> paths = vector<vector<pos>>();
+	vector<sensor> points = vector<sensor>();
+	vector<vector<sensor>> paths = vector<vector<sensor>>();
 	printf("reading file..\r\n");
 	while (getline(myfile, line)) {
 		string val = "";
-		pos p = pos();
+		sensor p = sensor();
 		for (char c : line)
 		{
 			if (c == ',') {
@@ -560,7 +560,7 @@ void Day14::ProcessInputB(ifstream& myfile)
 		}
 		setY(val, p, points);
 		paths.push_back(points);
-		points = vector<pos>();
+		points = vector<sensor>();
 	}
 
 	drawGridWithBottom(paths, answer);
