@@ -1,7 +1,17 @@
 #include "Day15.h"
+#include <iostream>
 #include <algorithm>
 #include <chrono>
+#include <thread>
 #include <ctime>   
+#include <ranges>
+#include <execution>
+#include <ppl.h>
+#include <concurrent_vector.h>
+
+using namespace std;
+using numbertype = long long int;
+
 
 Day15::Day15() : Day("Day 15")
 {
@@ -9,13 +19,13 @@ Day15::Day15() : Day("Day 15")
 
 class pos {
 public:
-	long long int x = 0;
-	long long int y = 0;
+	numbertype x = 0;
+	numbertype y = 0;
 
-	long long int manhattanDist(pos& p) {
+	numbertype manhattanDist(pos& p) {
 
-		long long int result = 0;
-		long long int x_dif, y_dif;
+		numbertype result = 0;
+		numbertype x_dif, y_dif;
 
 		x_dif = p.x - x;
 		y_dif = p.y - y;
@@ -28,30 +38,74 @@ public:
 	}
 
 
-
-	auto operator<=>(const pos&) const = default;
-
-	auto operator<(const pos& p) {
+	auto operator<(pos& p) const {
 		return  y == p.y ? x < p.x : y < p.y;
+	}
+	
+	const auto operator<(const pos& p) const {
+		return  y == p.y ? x < p.x : y < p.y;
+	}
+
+	auto operator>(pos& p) const {
+		return  y == p.y ? x > p.x : y > p.y;
+	}
+
+	auto operator<=(pos& p) const {
+		return  y <= p.y && x <= p.x;
+	}
+
+	auto operator>=(pos& p) const {
+		return  y >= p.y && x >= p.x;
+	}
+
+	auto operator==(const pos& p) const {
+		return  y == p.y && x == p.x;
 	}
 
 };
 
 
 class sensor : public pos {
+
 public:
 	pos beacon;
 
 
+	numbertype leftX = 0;
+	numbertype leftY = 0;
+	numbertype rightX = 0;
+	numbertype rightY = 0;
+	numbertype manhattanDist = 0;
+	numbertype coverageSideLength = 0;
+	numbertype leftXPlusLeftY = 0;
+	numbertype leftYMinLeftX = 0;
+	numbertype rightXMinRightY = 0;
+	numbertype rightXPlusRightY = 0;
+	numbertype topY = 0;
+	numbertype bottomY = 0;
+
+	void calc() {
+		manhattanDist = pos::manhattanDist(beacon);
+		coverageSideLength = (numbertype)floor(sqrt(pow(manhattanDist,2) + pow(manhattanDist,2)));
+		leftX = x - manhattanDist;
+		leftY = y;
+		rightX = x + manhattanDist;
+		rightY = y;
+		leftXPlusLeftY = leftX + leftY;
+		leftYMinLeftX = leftY - leftX;
+		rightXMinRightY = rightX - rightY;
+		rightXPlusRightY = rightX + rightY;
+		bottomY = y - manhattanDist;
+		topY = y + manhattanDist;
+	}
 
 	vector<pos> noBeaconPoints() {
 		vector<pos> result;
 
-		auto md = manhattanDist(beacon);
-		
+		auto md = manhattanDist;
 
 		for (auto mdY = (y - md); mdY < (y + md); mdY++) {
-			
+
 
 			if (mdY != 10 && mdY != 2'000'000) {
 				continue;
@@ -62,12 +116,12 @@ public:
 				p->x = mdX;
 				p->y = mdY;
 
-				if (manhattanDist(*p) <= md && *p != beacon) {
+				if (pos::manhattanDist(*p) <= md && *p != beacon) {
 					result.push_back(*p);
 				}
 				delete p;
 
-				
+
 			}
 
 
@@ -75,44 +129,85 @@ public:
 
 		return result;
 	}
-	vector<pos> noBeaconPointsB(long long int min, long long int max) {
-		vector<pos> result;
 
-		auto md = manhattanDist(beacon);
-		auto minY = std::max(std::min((y - md), max),min);
-		auto maxY = std::max(std::min((y + md), max), min);
-		auto minX = std::max(std::min((x - md), max), min);
-		auto maxX = std::max(std::min((x + md), max), min);
-		auto b = result.begin();
-		auto e = result.end();
-		auto start = std::chrono::system_clock::now();
-		pos* p = new pos();
-		for (auto mdY = minY; mdY <= maxY; mdY++) {
-			if (mdY == (minY + 100)) {
-				auto end = std::chrono::system_clock::now();
-				std::chrono::duration<double> elapsed_seconds = end - start;
-				printf("100 rows in %f seconds\r\n", elapsed_seconds.count());
-			}
-			for (auto mdX = minX; mdX <= maxX; mdX++) {
-				p->x = mdX;
-				p->y = mdY;
-				if (find(b, e, *p) == e) {
-					if (manhattanDist(*p) <= md) {
-						result.push_back(*p);
+
+
+	bool overlaps(numbertype& xx, long long yy) {
+
+		// C/\D
+		// A\/B
+		// 
+		// x: 6
+		// y: 0
+		// leftX: -1
+		// leftY: 7
+		// -6+6=0
+		// 6+-1-7=-2
+		// 
+		// line A:y = -x + (leftX+leftY); 
+		// line B:y = x - (rightX-rightY);
+		// line C:y = x + (leftY-leftX);
+		// line D:y = -x + (rightX+rightY) -x = dY - (rightX+rightY)
+		bool result = false;
+
+		if (xx >= leftX && xx <= rightX && yy <= topY && yy >= bottomY) {
+
+			auto diffX = abs(x - xx);
+			auto diffY = abs(y - yy);
+
+			if (diffX <= manhattanDist && diffY <= manhattanDist) {
+				if (xx <= x) {
+					if (yy <= y) {
+						auto aY = (xx * -1) + (leftXPlusLeftY);
+						result = yy >= aY;
+						//if (y == aY) {
+						if (result) {
+							auto newX = (xx + (2 * diffX));
+							xx = newX;
+						}
 					}
+					else {
+						auto cY = (xx)+(leftYMinLeftX);
+						result = yy <= cY;
+						//if (y == cY) {
+
+					}
+
 				}
-				
+				else if (xx > x) {
+
+					if (yy <= y) {
+						result = (yy >= (xx)-(rightXMinRightY));
+						if (result) {
+							xx += diffY;
+						}
+					}
+					else {
+						result = (yy <= (xx * -1) + (rightXPlusRightY));
+
+					}
+
+
+
+
+				}
 			}
 		}
 
-		delete p;
+
 		return result;
+
+	};
+
+
+	bool overlaps(pos p) {
+		auto x = p.x;
+		return overlaps(x, p.y);
 	}
 
-
-	auto operator<=>(const sensor&) const = default;
 
 };
+
 
 void parseBeacons(std::string& line, std::vector<sensor>& sensors)
 {
@@ -176,6 +271,7 @@ void parseBeacons(std::string& line, std::vector<sensor>& sensors)
 					setBY = false;
 					bYSet = true;
 					sen->beacon = *beacon;
+					sen->calc();
 					sensors.push_back(*sen);
 					delete sen;
 					delete beacon;
@@ -187,11 +283,11 @@ void parseBeacons(std::string& line, std::vector<sensor>& sensors)
 		}
 
 	}
-}
 
+}
 void Day15::ProcessInputA(ifstream& myfile)
 {
-	long long int answer = 0LL;
+	numbertype answer = 0LL;
 	string line;
 	vector<sensor> sensors;
 	while (getline(myfile, line))
@@ -203,9 +299,9 @@ void Day15::ProcessInputA(ifstream& myfile)
 
 
 	vector<pos> noBeaconPoints = vector<pos>();
-	long long int i = 1;
-	long long int yA = 10;
-	long long int yB = 2'000'000;
+	numbertype i = 1;
+	numbertype yA = 10;
+	numbertype yB = 2'000'000;
 
 	for (auto& s : sensors) {
 		i++;
@@ -223,9 +319,55 @@ void Day15::ProcessInputA(ifstream& myfile)
 	printf("Answer y=2000000:%lli\n", answer);
 }
 
+
+void addPosNextToBorder(sensor& s, pos* pMin, pos* pMax, priority_queue<pos>& poi)
+{
+	
+	for (auto counter = 0LL; counter <= s.coverageSideLength-1; counter++) {
+
+		// A/\B
+		// C\/D
+
+		auto* pA = new pos();
+		pA->x = s.x - counter;
+		pA->y = s.topY - counter + 1;
+		if (*pA >= *pMin && *pA <= *pMax) {
+			poi.push(*pA);
+		}
+
+		auto* pB = new pos();
+		pB->x = s.x + counter;
+		pB->y = s.topY - counter +1;
+		if (*pA != *pB && (*pB >= *pMin && *pB <= *pMax)) {
+			poi.push(*pB);
+		}
+
+		auto* pC = new pos();
+		pC->x = s.x - counter;
+		pC->y = s.bottomY + counter -1;
+		if ((*pC != *pA && *pC != *pB) && (*pC >= *pMin && *pC <= *pMax)) {
+			poi.push(*pC);
+		}
+
+		auto* pD = new pos();
+		pD->x = s.x + counter;
+		pD->y = s.bottomY + counter-1;
+		if ((*pD != *pA && *pD != *pB && *pD != *pC) && (*pD >= *pMin && *pD <= *pMax)) {
+			poi.push(*pD);
+		}
+
+		delete pA;
+		delete pB;
+		delete pC;
+		delete pD;
+	};
+}
+
 void Day15::ProcessInputB(ifstream& myfile)
 {
-	long long int answer = 0LL;
+
+	numbertype answer = 0LL;
+
 	string line;
 	vector<sensor> sensors;
 	while (getline(myfile, line))
@@ -233,40 +375,68 @@ void Day15::ProcessInputB(ifstream& myfile)
 		parseBeacons(line, sensors);
 	}
 
-	vector<pos> noBeaconPoints = vector<pos>();
-	long long int i = 0;
-	long long int maxA = 20;
-	long long int maxB = 4'000'000;
-
-	for (auto& s : sensors) {
-		i++;
-		printf("finding no beacon points for: sensor %zi/%zi\r\n", i, sensors.size());
-		if (sensors.size() == 14)
-		{
-			noBeaconPoints.append_range(s.noBeaconPointsB(0LL, maxA));
-		}
-		else {
-			noBeaconPoints.append_range(s.noBeaconPointsB(0LL, maxB));
-		}
+	numbertype i = 0;
+	numbertype maxA = 20;
+	numbertype maxB = 4'000'000;
+	numbertype maxXY;
+	if (sensors.size() == 14)
+	{
+		maxXY = maxA;
 	}
-	sort(noBeaconPoints.begin(), noBeaconPoints.end());
+	else {
+		maxXY = maxB;
+	}
 
-	auto u = unique(noBeaconPoints.begin(), noBeaconPoints.end());
-	noBeaconPoints.erase(u, noBeaconPoints.end());
+	priority_queue<pos> poi;
 
-	auto lastNbp = pos();
+	auto* pMax = new pos{maxXY, maxXY};
+	auto* pMin = new pos{ 0LL,0LL };
 	
-	for (auto& nbp : noBeaconPoints) {
-		if (nbp.y != lastNbp.y) {
-			lastNbp.y = nbp.y;
-			lastNbp.x = 0;
-		}
-		if (nbp.x - lastNbp.x > 1) {
-			answer = ((nbp.x - 1) * maxB) + nbp.y;
-		}
-		lastNbp = nbp;
-	}
+	if (sensors.size() == 14) {
+		priority_queue<pos> poiTest;
 
+		addPosNextToBorder(sensors[6], pMin, pMax, poiTest);
+	}
+	
+	int sCount = 0;
+	for (sensor& s : sensors) {
+
+		printf("adding poi's for %i\r\n", ++sCount);
+		addPosNextToBorder(s, pMin, pMax, poi);
+	};
+
+	
+	auto size = poi.size();
+	printf("processing poi's...\r\nitem count: %lli\r\n", size);
+
+	while (!poi.empty() && answer == 0) {
+		
+		pos p = poi.top();
+		poi.pop();
+		while (!poi.empty()) {
+			pos p2 = poi.top();
+			if (p2 == p) {
+				poi.pop();
+			}
+			else {
+				break;
+			}
+		}
+		
+		if (((size - poi.size()) % 10000) == 0) {
+			printf("items left: %lli\r\n", poi.size());
+		}
+
+		
+		if (any_of(begin(sensors), end(sensors), [&p](sensor& s) { return s.overlaps(p); })) {
+			continue;
+		}
+		answer = (p.x * 4'000'000) + p.y;
+		
+
+	}
 	printf("Answer:%lli\n", answer);
+	
 
 }
+

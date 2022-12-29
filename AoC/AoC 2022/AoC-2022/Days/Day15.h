@@ -9,5 +9,6 @@ public:
     virtual void ProcessInputA(ifstream& myfile) override;
 
     virtual void ProcessInputB(ifstream& myfile) override;
+   
 };
 
