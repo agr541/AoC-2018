@@ -8,6 +8,7 @@
 #include <execution>
 #include <ppl.h>
 #include <concurrent_vector.h>
+#include <concurrent_priority_queue.h>
 
 using namespace std;
 using numbertype = long long int;
@@ -41,7 +42,7 @@ public:
 	auto operator<(pos& p) const {
 		return  y == p.y ? x < p.x : y < p.y;
 	}
-	
+
 	const auto operator<(const pos& p) const {
 		return  y == p.y ? x < p.x : y < p.y;
 	}
@@ -70,7 +71,7 @@ class sensor : public pos {
 public:
 	pos beacon;
 
-
+	int id = 0;
 	numbertype leftX = 0;
 	numbertype leftY = 0;
 	numbertype rightX = 0;
@@ -86,7 +87,7 @@ public:
 
 	void calc() {
 		manhattanDist = pos::manhattanDist(beacon);
-		coverageSideLength = (numbertype)floor(sqrt(pow(manhattanDist,2) + pow(manhattanDist,2)));
+		coverageSideLength = (numbertype)floor(sqrt(pow(manhattanDist, 2) + pow(manhattanDist, 2)));
 		leftX = x - manhattanDist;
 		leftY = y;
 		rightX = x + manhattanDist;
@@ -272,6 +273,7 @@ void parseBeacons(std::string& line, std::vector<sensor>& sensors)
 					bYSet = true;
 					sen->beacon = *beacon;
 					sen->calc();
+					sen->id = (int)sensors.size() + 1;
 					sensors.push_back(*sen);
 					delete sen;
 					delete beacon;
@@ -320,10 +322,10 @@ void Day15::ProcessInputA(ifstream& myfile)
 }
 
 
-void addPosNextToBorder(sensor& s, pos* pMin, pos* pMax, priority_queue<pos>& poi)
+void addPosNextToBorder(sensor& s, pos* pMin, pos* pMax, concurrency::concurrent_priority_queue<pos>& poi)
 {
-	
-	for (auto counter = 0LL; counter <= s.coverageSideLength-1; counter++) {
+
+	for (auto counter = 0LL; counter <= s.coverageSideLength - 1; counter++) {
 
 		// A/\B
 		// C\/D
@@ -337,21 +339,21 @@ void addPosNextToBorder(sensor& s, pos* pMin, pos* pMax, priority_queue<pos>& po
 
 		auto* pB = new pos();
 		pB->x = s.x + counter;
-		pB->y = s.topY - counter +1;
+		pB->y = s.topY - counter + 1;
 		if (*pA != *pB && (*pB >= *pMin && *pB <= *pMax)) {
 			poi.push(*pB);
 		}
 
 		auto* pC = new pos();
 		pC->x = s.x - counter;
-		pC->y = s.bottomY + counter -1;
+		pC->y = s.bottomY + counter - 1;
 		if ((*pC != *pA && *pC != *pB) && (*pC >= *pMin && *pC <= *pMax)) {
 			poi.push(*pC);
 		}
 
 		auto* pD = new pos();
 		pD->x = s.x + counter;
-		pD->y = s.bottomY + counter-1;
+		pD->y = s.bottomY + counter - 1;
 		if ((*pD != *pA && *pD != *pB && *pD != *pC) && (*pD >= *pMin && *pD <= *pMax)) {
 			poi.push(*pD);
 		}
@@ -387,56 +389,46 @@ void Day15::ProcessInputB(ifstream& myfile)
 		maxXY = maxB;
 	}
 
-	priority_queue<pos> poi;
+	concurrency::concurrent_priority_queue<pos> poi;
 
-	auto* pMax = new pos{maxXY, maxXY};
+	auto* pMax = new pos{ maxXY, maxXY };
 	auto* pMin = new pos{ 0LL,0LL };
-	
-	if (sensors.size() == 14) {
-		priority_queue<pos> poiTest;
 
-		addPosNextToBorder(sensors[6], pMin, pMax, poiTest);
-	}
-	
+
 	int sCount = 0;
-	for (sensor& s : sensors) {
+	//for (sensor& s : sensors) {
+	concurrency::parallel_for_each(begin(sensors), end(sensors), [&poi, pMin, pMax](sensor& s) {
 
-		printf("adding poi's for %i\r\n", ++sCount);
-		addPosNextToBorder(s, pMin, pMax, poi);
-	};
+		printf("adding poi's for %i\r\n", s.id);
+	addPosNextToBorder(s, pMin, pMax, poi);
+		});
+	//}
 
-	
+
 	auto size = poi.size();
 	printf("processing poi's...\r\nitem count: %lli\r\n", size);
 
+	
 	while (!poi.empty() && answer == 0) {
-		
-		pos p = poi.top();
-		poi.pop();
-		while (!poi.empty()) {
-			pos p2 = poi.top();
-			if (p2 == p) {
-				poi.pop();
-			}
-			else {
-				break;
-			}
-		}
-		
-		if (((size - poi.size()) % 10000) == 0) {
-			printf("items left: %lli\r\n", poi.size());
-		}
 
-		
-		if (any_of(begin(sensors), end(sensors), [&p](sensor& s) { return s.overlaps(p); })) {
-			continue;
+		pos p;
+		if (poi.try_pop(p)) {
+
+
+			if (((size - poi.size()) % 10000) == 0) {
+				printf("items left: %lli\r\n", poi.size());
+			}
+
+
+			if (any_of(begin(sensors), end(sensors), [&p](sensor& s) { return s.overlaps(p); })) {
+				continue;
+			}
+			answer = (p.x * 4'000'000) + p.y;
 		}
-		answer = (p.x * 4'000'000) + p.y;
-		
 
 	}
 	printf("Answer:%lli\n", answer);
-	
+
 
 }
 
